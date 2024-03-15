@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 const MAXSPEED = 500.0
 const ACCEL = 2000
+var flipped = false
 
 @export var jump_height : float
 @export var jump_time_to_peak: float
@@ -22,7 +23,9 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += get_gravity() * delta
-
+	
+	
+	
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_velocity
@@ -30,10 +33,32 @@ func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("move_left", "move_right")
+	# if someone has a more efficient way for this please fix it
+	var swordPosition = position.x - $sword.position.x
+	#Use linear algebra later
+	if direction > 0:
+		$AnimatedSprite2D.flip_h = false
+		$sword.position.x = 35
+		if flipped == true:
+			flipped = false
+			$sword.scale.x *= -1
+	elif direction < 0:
+		$AnimatedSprite2D.flip_h = true
+		$sword.position.x = -35
+		if flipped == false:
+			flipped = true
+			$sword.scale.x *= -1
+		
 	if direction:
 		velocity.x += direction * ACCEL * delta
 	else:
 		velocity.x = lerp(velocity.x, 0.0, 0.2)
 	velocity.x = clamp(velocity.x, -MAXSPEED, MAXSPEED)
-
+	
+	attack()
 	move_and_slide()
+
+func attack():
+	if Input.is_action_just_pressed("attack"):
+		$sword/AnimationPlayer.play("swing")
+		$sword/AnimationPlayer.queue("RESET")

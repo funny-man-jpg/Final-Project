@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bmmoiannutw30"]
+[gd_scene load_steps=6 format=3 uid="uid://bmmoiannutw30"]
 
 [ext_resource type="Texture2D" uid="uid://dmy02bctd5msi" path="res://assets/player.png" id="1_4vavj"]
 [ext_resource type="Script" path="res://player.gd" id="1_yvb2d"]
+[ext_resource type="PackedScene" uid="uid://bskw17xq508gr" path="res://sword.tscn" id="3_84e25"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ifkcn"]
 animations = [{
@@ -23,7 +24,6 @@ script = ExtResource("1_yvb2d")
 jump_height = 200.0
 jump_time_to_peak = 0.6
 jump_time_to_descent = 0.5
-metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(3.05176e-05, -3.8147e-06)
@@ -32,3 +32,7 @@ sprite_frames = SubResource("SpriteFrames_ifkcn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_01rcu")
+
+[node name="sword" parent="." instance=ExtResource("3_84e25")]
+position = Vector2(35, -9)
+scale = Vector2(1, 1)
