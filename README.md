@@ -15,3 +15,9 @@ func get_gravity():
 
 from: https://www.youtube.com/watch?v=IOe1aGY6hXA
 used for: Smoother movement
+
+
+Hitboxes: https://www.youtube.com/watch?v=JWjzSn95bM0
+
+
+NOTE FOR LATER: IN THE PLAYER CLASS USE LINEAR ALGEBRA(TRANSFORM2D) TO TRY TO GET TRANSFORMATIONS WORKING FOR FLIPPING THE SWORD OVER THE Y AXIS
