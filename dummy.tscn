@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://c7h0llx6x7q61"]
+
+[ext_resource type="Script" path="res://Dummy.gd" id="1_3y6vi"]
+[ext_resource type="Script" path="res://HurtBox.gd" id="2_7ovsq"]
+[ext_resource type="Texture2D" uid="uid://cctjkxg7tss4l" path="res://icon.svg" id="3_vlvly"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k5bju"]
+size = Vector2(120, 117)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dwhne"]
+size = Vector2(130, 126)
+
+[node name="dummy" type="RigidBody2D"]
+script = ExtResource("1_3y6vi")
+
+[node name="HurtBox" type="Area2D" parent="."]
+script = ExtResource("2_7ovsq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(1, -2.5)
+shape = SubResource("RectangleShape2D_k5bju")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_vlvly")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_dwhne")
