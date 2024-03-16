@@ -35,4 +35,3 @@ shape = SubResource("CapsuleShape2D_01rcu")
 
 [node name="sword" parent="." instance=ExtResource("3_84e25")]
 position = Vector2(35, -9)
-scale = Vector2(1, 1)
