@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://c0dgoidywb7my"]
+
+[ext_resource type="Script" path="res://HurtBox.gd" id="1_c35gx"]
+[ext_resource type="Script" path="res://basic_enemy.gd" id="1_kmxyo"]
+[ext_resource type="Texture2D" uid="uid://cctjkxg7tss4l" path="res://icon.svg" id="2_hqne0"]
+[ext_resource type="PackedScene" uid="uid://bskw17xq508gr" path="res://sword.tscn" id="3_p7d2h"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o55te"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_hqne0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xq2s0"]
+size = Vector2(122, 126)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hq80y"]
+size = Vector2(122, 120)
+
+[node name="BasicEnemy" type="CharacterBody2D"]
+position = Vector2(1, -1)
+script = ExtResource("1_kmxyo")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_o55te")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_xq2s0")
+
+[node name="sword" parent="." instance=ExtResource("3_p7d2h")]
+position = Vector2(85, -4)
+
+[node name="HurtBox" type="Area2D" parent="."]
+script = ExtResource("1_c35gx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("RectangleShape2D_hq80y")
+
+[node name="AttackCooldown" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
