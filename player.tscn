@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bmmoiannutw30"]
+[gd_scene load_steps=8 format=3 uid="uid://bmmoiannutw30"]
 
 [ext_resource type="Texture2D" uid="uid://dmy02bctd5msi" path="res://assets/player.png" id="1_4vavj"]
 [ext_resource type="Script" path="res://player.gd" id="1_yvb2d"]
 [ext_resource type="PackedScene" uid="uid://bskw17xq508gr" path="res://sword.tscn" id="3_84e25"]
+[ext_resource type="Script" path="res://HurtBox.gd" id="4_kdbt1"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ifkcn"]
 animations = [{
@@ -18,6 +19,10 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_01rcu"]
 radius = 30.0
 height = 88.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gyi08"]
+radius = 20.0
+height = 86.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_yvb2d")
@@ -35,3 +40,15 @@ shape = SubResource("CapsuleShape2D_01rcu")
 
 [node name="sword" parent="." instance=ExtResource("3_84e25")]
 position = Vector2(35, -9)
+
+[node name="HurtBox" type="Area2D" parent="."]
+script = ExtResource("4_kdbt1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CapsuleShape2D_gyi08")
+
+[node name="AttackCooldown" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+
+[connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]

@@ -4,14 +4,23 @@ extends CharacterBody2D
 const MAXSPEED = 500.0
 const ACCEL = 2000
 var flipped = false
+var cooldown = false
 
 @export var jump_height : float
 @export var jump_time_to_peak: float
 @export var jump_time_to_descent : float
+@export var health : int
 
 @onready var jump_velocity : float = ((2.0 * jump_height) / jump_time_to_peak) * -1.0
 @onready var jump_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
 @onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
+
+func _ready():
+	# set the player's health
+	self.health = 200
+	
+	# make sure the sword is placed properly as well
+	$sword.position.x = 40
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -38,13 +47,13 @@ func _physics_process(delta):
 	#Use linear algebra later
 	if direction > 0:
 		$AnimatedSprite2D.flip_h = false
-		$sword.position.x = 35
+		$sword.position.x = 40
 		if flipped == true:
 			flipped = false
 			$sword.scale.x *= -1
 	elif direction < 0:
 		$AnimatedSprite2D.flip_h = true
-		$sword.position.x = -35
+		$sword.position.x = -40
 		if flipped == false:
 			flipped = true
 			$sword.scale.x *= -1
@@ -59,6 +68,29 @@ func _physics_process(delta):
 	move_and_slide()
 
 func attack():
-	if Input.is_action_just_pressed("attack"):
+	# check that the player tried to attack and that they're not on cooldown
+	if Input.is_action_just_pressed("attack") and !cooldown:
+		# attack
 		$sword/AnimationPlayer.play("swing")
 		$sword/AnimationPlayer.queue("RESET")
+		
+		# put the player on cooldown
+		$AttackCooldown.start()
+		cooldown = true
+
+func take_damage(damage):
+	# get hit up
+	velocity.y = -700
+	
+	# lose health
+	self.health -= damage
+	
+	# check if dead
+	if self.health <= 0:
+		# remove self from the game
+		queue_free()
+
+
+func _on_attack_cooldown_timeout():
+	# the cooldown is over
+	cooldown = false

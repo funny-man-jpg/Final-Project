@@ -1,11 +1,10 @@
 extends RigidBody2D
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-	
-func take_damage():
+	pass
+
+func take_damage(damage):
 	apply_central_impulse(Vector2(0, -1000))
 
 
