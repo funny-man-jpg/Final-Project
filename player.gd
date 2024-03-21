@@ -1,15 +1,17 @@
 extends CharacterBody2D
 
+signal health_change(new_health)
 
 const MAXSPEED = 500.0
 const ACCEL = 2000
 var flipped = false
 var cooldown = false
+var max_health = 200
+var health
 
 @export var jump_height : float
 @export var jump_time_to_peak: float
 @export var jump_time_to_descent : float
-@export var health : int
 
 @onready var jump_velocity : float = ((2.0 * jump_height) / jump_time_to_peak) * -1.0
 @onready var jump_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
@@ -17,7 +19,7 @@ var cooldown = false
 
 func _ready():
 	# set the player's health
-	self.health = 200
+	health = max_health
 	
 	# make sure the sword is placed properly as well
 	$sword.position.x = 40
@@ -83,10 +85,12 @@ func take_damage(damage):
 	velocity.y = -700
 	
 	# lose health
-	self.health -= damage
+	health -= damage
+	# get the health signal
+	emit_signal("health_change", health)
 	
 	# check if dead
-	if self.health <= 0:
+	if health <= 0:
 		# remove self from the game
 		queue_free()
 

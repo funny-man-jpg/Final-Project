@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-signal enemy_health_change(new_health)
+signal enemy2_health_change(new_health)
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
@@ -26,7 +26,7 @@ func take_damage(damage):
 	#
 	# lose health
 	health -= damage
-	emit_signal("enemy_health_change", health)
+	emit_signal("enemy2_health_change", health)
 	
 	# check if dead
 	if health <= 0:
