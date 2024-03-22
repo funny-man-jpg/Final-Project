@@ -17,6 +17,8 @@ var health
 @onready var jump_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
 @onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
 
+var dash = false
+
 func _ready():
 	# set the player's health
 	health = max_health
@@ -60,12 +62,12 @@ func _physics_process(delta):
 			flipped = true
 			$sword.scale.x *= -1
 		
-	if direction:
+	if direction and dash == false:
 		velocity.x += direction * ACCEL * delta
-	else:
+	elif dash == false:
 		velocity.x = lerp(velocity.x, 0.0, 0.2)
-	velocity.x = clamp(velocity.x, -MAXSPEED, MAXSPEED)
-	
+	if dash == false:
+		velocity.x = clamp(velocity.x, -MAXSPEED, MAXSPEED)
 	attack()
 	move_and_slide()
 
@@ -74,6 +76,42 @@ func attack():
 	if Input.is_action_just_pressed("attack") and !cooldown:
 		# attack
 		$sword/AnimationPlayer.play("swing")
+		$sword/AnimationPlayer.queue("RESET")
+		
+		# put the player on cooldown
+		$AttackCooldown.start()
+		cooldown = true
+	if Input.is_action_just_pressed("heavy_attack") and !cooldown:
+		# attack
+		$sword/AnimationPlayer.play("heavy_swing")
+		$sword/AnimationPlayer.queue("RESET")
+		
+		# put the player on cooldown
+		$AttackCooldown.start()
+		cooldown = true
+	if Input.is_action_just_pressed("upslash") and !cooldown:
+		# attack
+		$sword/AnimationPlayer.play("upslash")
+		$sword/AnimationPlayer.queue("RESET")
+		
+		# put the player on cooldown
+		$AttackCooldown.start()
+		cooldown = true
+	if Input.is_action_just_pressed("dash") and !cooldown:
+		# attack
+		$sword/AnimationPlayer.play("dash")
+		var direction = Input.get_axis("move_left", "move_right")
+		velocity.x = 1000 * direction
+		dash = true;
+		$DashTimer.start()
+		$sword/AnimationPlayer.queue("RESET")
+		
+		# put the player on cooldown
+		$AttackCooldown.start()
+		cooldown = true
+	if Input.is_action_just_pressed("TornadoSlash") and !cooldown:
+		# attack
+		$sword/AnimationPlayer.play("TornadoAttack")
 		$sword/AnimationPlayer.queue("RESET")
 		
 		# put the player on cooldown
@@ -94,7 +132,10 @@ func take_damage(damage):
 		# remove self from the game
 		queue_free()
 
-
 func _on_attack_cooldown_timeout():
 	# the cooldown is over
 	cooldown = false
+
+
+func _on_dash_timer_timeout():
+	dash = false
