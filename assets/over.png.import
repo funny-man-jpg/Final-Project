@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdsshtx40y3mv"
-path="res://.godot/imported/over.png-9920230a5f39b261af14c614328c6b15.ctex"
+path="res://.godot/imported/over.png-959f35430cc8cb10fc8fefd36cf1f376.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Desktop/1501/over.png"
-dest_files=["res://.godot/imported/over.png-9920230a5f39b261af14c614328c6b15.ctex"]
+source_file="res://assets/over.png"
+dest_files=["res://.godot/imported/over.png-959f35430cc8cb10fc8fefd36cf1f376.ctex"]
 
 [params]
 

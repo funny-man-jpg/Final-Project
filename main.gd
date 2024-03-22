@@ -20,22 +20,22 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	# give the enemy the player's location (to be changed later so that the enemy goes to the player when in range)
-	if $Player != null:
-		if $BasicEnemy != null:
-			$BasicEnemy.getPlayerPos($Player.position.x, $Player.position.y)
-		if $BasicEnemy2 != null:
-			$BasicEnemy2.getPlayerPos($Player.position.x, $Player.position.y)
-
-
+	pass
 
 func _on_basic_enemy_2_enemy_2_health_change(new_health):
 	basicenemy2_health_bar.value = new_health
 
-
 func _on_basic_enemy_enemy_health_change(new_health):
 	basicenemy_health_bar.value = new_health
 
-
 func _on_player_health_change(new_health):
 	player_health_bar.value = new_health
+
+func _on_basic_enemy_new_enemy(enemy):
+	# give the new enemy a reference to the player
+	enemy.getPlayer($Player)
+
+
+func _on_basic_enemy_2_new_enemy(enemy):
+	# give the new enemy a reference to the player
+	enemy.getPlayer($Player)

@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://main.gd" id="1_4a271"]
 [ext_resource type="PackedScene" uid="uid://bmmoiannutw30" path="res://player.tscn" id="2_xoa5f"]
-[ext_resource type="Texture2D" uid="uid://cpjs3okddpqxx" path="res://assets/under.png" id="3_d24a4"]
+[ext_resource type="Texture2D" uid="uid://hjwmplmgjqbs" path="res://assets/under.png" id="3_d24a4"]
 [ext_resource type="PackedScene" uid="uid://boo18xr6jo7cj" path="res://walls.tscn" id="3_jj8pa"]
-[ext_resource type="Texture2D" uid="uid://dnhs0eojjmhyr" path="res://assets/over.png" id="4_kfmo0"]
-[ext_resource type="Texture2D" uid="uid://18mr4b5bdbcf" path="res://assets/progress.png" id="5_4qo2l"]
+[ext_resource type="Texture2D" uid="uid://cdsshtx40y3mv" path="res://assets/over.png" id="4_kfmo0"]
+[ext_resource type="Texture2D" uid="uid://bsh4u1x3gt1rw" path="res://assets/progress.png" id="5_4qo2l"]
 [ext_resource type="Script" path="res://basic_enemy2.gd" id="5_6iqso"]
 [ext_resource type="PackedScene" uid="uid://c0dgoidywb7my" path="res://basic_enemy.tscn" id="6_klgvo"]
 
@@ -50,7 +50,7 @@ offset_right = 1309.0
 offset_bottom = 766.0
 theme_override_font_sizes/font_size = 50
 text = "Press 'a' and 'd' to move left and right
-Pressing 'w' makes you jump
+Pressing 'spacebar' makes you jump
 Left click is attack"
 
 [node name="BasicEnemy2" parent="." instance=ExtResource("6_klgvo")]
@@ -68,4 +68,6 @@ texture_progress = ExtResource("5_4qo2l")
 
 [connection signal="health_change" from="Player" to="." method="_on_player_health_change"]
 [connection signal="enemy_health_change" from="BasicEnemy" to="." method="_on_basic_enemy_enemy_health_change"]
+[connection signal="new_enemy" from="BasicEnemy" to="." method="_on_basic_enemy_new_enemy"]
 [connection signal="enemy2_health_change" from="BasicEnemy2" to="." method="_on_basic_enemy_2_enemy_2_health_change"]
+[connection signal="new_enemy" from="BasicEnemy2" to="." method="_on_basic_enemy_2_new_enemy"]
