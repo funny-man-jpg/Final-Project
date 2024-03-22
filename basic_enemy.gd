@@ -10,6 +10,7 @@ var cooldown = false
 var max_health = 100
 var health
 var player
+var hitStun = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -24,8 +25,13 @@ func _ready():
 # when hit
 func take_damage(damage):
 	# get hit up
-	velocity.y = -700
-	
+	if !player.flipped:
+		velocity.y = -400
+		velocity.x += 100
+	else:
+		velocity.y = -400
+		velocity.x += -100
+	hitStun = true
 	# lose health
 	health -= damage
 	emit_signal("enemy_health_change", health)
@@ -41,7 +47,7 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 	else:
 		# check that the player isn't null
-		if player != null:
+		if player != null and hitStun == false:
 			# find the distance to the player
 			var distanceToPlayer = Vector2(player.position.x - self.position.x, player.position.y - self.position.y)
 			
@@ -78,7 +84,6 @@ func _physics_process(delta):
 				else:
 					# move towards the player
 					velocity.x = distanceToPlayer.normalized().x * SPEED
-	
 	move_and_slide()
 
 func getPlayer(p):
@@ -88,3 +93,7 @@ func getPlayer(p):
 func _on_attack_cooldown_timeout():
 	# the enemy's attack cooldown is over
 	cooldown = false
+
+
+func _on_hit_stun_timeout():
+	hitStun = false

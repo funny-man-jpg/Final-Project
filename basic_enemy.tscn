@@ -47,4 +47,7 @@ shape = SubResource("RectangleShape2D_hq80y")
 wait_time = 2.0
 one_shot = true
 
+[node name="HitStun" type="Timer" parent="."]
+
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
+[connection signal="timeout" from="HitStun" to="." method="_on_hit_stun_timeout"]
