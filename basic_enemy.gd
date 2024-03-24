@@ -75,25 +75,33 @@ func _physics_process(delta):
 					# check if on cooldown
 					if !cooldown:
 						# attack the player
-						$sword/AnimationPlayer.play("swing")
-						$sword/AnimationPlayer.queue("RESET")
-						
-						# put the enemy on attack cooldown
-						$AttackCooldown.start()
-						cooldown = true
+						attack()
 				else:
 					# move towards the player
 					velocity.x = distanceToPlayer.normalized().x * SPEED
+	
+	# move
 	move_and_slide()
 
 func getPlayer(p):
 	player = p
 
-
 func _on_attack_cooldown_timeout():
 	# the enemy's attack cooldown is over
 	cooldown = false
 
-
 func _on_hit_stun_timeout():
 	hitStun = false
+
+func attack():
+	# choose between light or heavy attack
+	if randi() % 2 == 0:
+		$sword/AnimationPlayer.play("swing")
+	else:
+		$sword/AnimationPlayer.play("heavy_swing")
+	
+	$sword/AnimationPlayer.queue("RESET")
+	
+	# put the enemy on attack cooldown
+	$AttackCooldown.start()
+	cooldown = true
