@@ -32,6 +32,7 @@ func take_damage(damage):
 		velocity.y = -400
 		velocity.x += -100
 	hitStun = true
+	$HitStun.start()
 	# lose health
 	health -= damage
 	emit_signal("enemy_health_change", health)

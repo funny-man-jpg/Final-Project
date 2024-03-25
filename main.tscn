@@ -51,7 +51,8 @@ offset_bottom = 766.0
 theme_override_font_sizes/font_size = 50
 text = "Press 'a' and 'd' to move left and right
 Pressing 'spacebar' makes you jump
-Left click is attack"
+Left click is basic attack, right click is heavy attack
+1 is an upslash, 2 is a dash, 3 is a tornado spin attack"
 
 [node name="BasicEnemy2" parent="." instance=ExtResource("6_klgvo")]
 position = Vector2(1968, 776)
