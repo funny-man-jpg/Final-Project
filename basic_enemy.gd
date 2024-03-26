@@ -43,6 +43,8 @@ func take_damage(damage):
 		queue_free()
 
 func _physics_process(delta):
+	update_health()
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -106,3 +108,13 @@ func attack():
 	# put the enemy on attack cooldown
 	$AttackCooldown.start()
 	cooldown = true
+	
+func update_health():
+	var healthbar = $HealthBar
+	
+	healthbar.value = health
+	
+	if health >= max_health:
+		healthbar.visible = false
+	else:
+		healthbar.visible = true

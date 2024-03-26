@@ -139,3 +139,5 @@ func _on_attack_cooldown_timeout():
 
 func _on_dash_timer_timeout():
 	dash = false
+
+
