@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://ck8fn3yyop82r"]
+
+[ext_resource type="Script" path="res://background.gd" id="1_pkeei"]
+[ext_resource type="Texture2D" path="res://assets/1.png" id="1_ypcb1"]
+[ext_resource type="Texture2D" path="res://assets/2.png" id="2_2k7h6"]
+[ext_resource type="Texture2D" path="res://assets/5.png" id="3_sqlmj"]
+
+[node name="Background" type="ParallaxBackground"]
+script = ExtResource("1_pkeei")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(2300, 0)
+
+[node name="1" type="Sprite2D" parent="ParallaxLayer"]
+scale = Vector2(4.01407, 4.29012)
+texture = ExtResource("1_ypcb1")
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(2300, 0)
+
+[node name="2" type="Sprite2D" parent="ParallaxLayer2"]
+scale = Vector2(4.1306, 4.29012)
+texture = ExtResource("2_2k7h6")
+centered = false
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(2300, 0)
+
+[node name="3" type="Sprite2D" parent="ParallaxLayer3"]
+position = Vector2(0, 13)
+scale = Vector2(4.26676, 4.25)
+texture = ExtResource("3_sqlmj")
+centered = false
