@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://5l1cpc7ivast"]
+[gd_scene load_steps=6 format=3 uid="uid://5l1cpc7ivast"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_4a271"]
 [ext_resource type="PackedScene" uid="uid://bmmoiannutw30" path="res://player.tscn" id="2_xoa5f"]
 [ext_resource type="PackedScene" uid="uid://boo18xr6jo7cj" path="res://walls.tscn" id="3_jj8pa"]
+[ext_resource type="PackedScene" uid="uid://ck8fn3yyop82r" path="res://background.tscn" id="5_x3c5t"]
 [ext_resource type="PackedScene" uid="uid://c0dgoidywb7my" path="res://basic_enemy.tscn" id="6_klgvo"]
 
 [node name="main" type="Node"]
@@ -32,3 +33,5 @@ Left click is attack"
 
 [node name="BasicEnemy2" parent="." instance=ExtResource("6_klgvo")]
 position = Vector2(1968, 776)
+
+[node name="ParallaxBackground" parent="." instance=ExtResource("5_x3c5t")]
