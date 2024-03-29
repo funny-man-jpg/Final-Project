@@ -2841,7 +2841,7 @@ texture_progress = ExtResource("5_llmcm")
 position = Vector2(1658, 3224)
 scale = Vector2(50, 1)
 
-[node name="BasicEnemy" parent="." instance=ExtResource("6_klgvo")]
+[node name="BasicEnemy" parent="." groups=["enemies"] instance=ExtResource("6_klgvo")]
 position = Vector2(1044, 247)
 
 [node name="Instructions" type="Label" parent="."]
@@ -2856,9 +2856,11 @@ Pressing 'spacebar' makes you jump
 Left click is basic attack, right click is heavy attack
 1 is an upslash, 2 is a dash, 3 is a tornado spin attack"
 
-[node name="BasicEnemy2" parent="." instance=ExtResource("6_klgvo")]
+[node name="BasicEnemy2" parent="." groups=["enemies"] instance=ExtResource("6_klgvo")]
 position = Vector2(1411, 141)
 
 [connection signal="health_change" from="Player" to="." method="_on_player_health_change"]
 [connection signal="enemy_health_change" from="BasicEnemy" to="." method="_on_basic_enemy_enemy_health_change"]
 [connection signal="new_enemy" from="BasicEnemy" to="." method="_on_basic_enemy_new_enemy"]
+[connection signal="enemy_health_change" from="BasicEnemy2" to="." method="_on_basic_enemy_enemy_health_change"]
+[connection signal="new_enemy" from="BasicEnemy2" to="." method="_on_basic_enemy_new_enemy"]
