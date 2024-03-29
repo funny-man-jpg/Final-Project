@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://basic_enemy.gd" id="1_kmxyo"]
 [ext_resource type="Texture2D" uid="uid://cctjkxg7tss4l" path="res://icon.svg" id="2_hqne0"]
 [ext_resource type="PackedScene" uid="uid://bskw17xq508gr" path="res://sword.tscn" id="3_p7d2h"]
-[ext_resource type="Texture2D" path="res://assets/under.png" id="5_1xeiv"]
-[ext_resource type="Texture2D" path="res://assets/progress.png" id="6_fpc60"]
+[ext_resource type="Texture2D" uid="uid://hjwmplmgjqbs" path="res://assets/under.png" id="5_1xeiv"]
+[ext_resource type="Texture2D" uid="uid://bsh4u1x3gt1rw" path="res://assets/progress.png" id="6_fpc60"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o55te"]
 animations = [{
