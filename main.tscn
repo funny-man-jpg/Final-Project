@@ -2832,7 +2832,6 @@ texture = ExtResource("2_cq6f5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ladder"]
 position = Vector2(2.5, 2.00002)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_2vbqi")
 
 [node name="TileMap" type="TileMap" parent="."]
