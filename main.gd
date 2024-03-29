@@ -20,7 +20,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	$Player/Camera2D/UpslashCooldown.value = $Player/UpslashCooldown.time_left
+	$Player/Camera2D/DashCooldown.value = $Player/DashCooldown.time_left
+	$Player/Camera2D/TornadoCooldown.value = $Player/TornadoCooldown.time_left
 
 #A signal to connect to the player's healthbar
 func _on_player_health_change(new_health):
