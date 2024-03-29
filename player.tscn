@@ -54,5 +54,20 @@ one_shot = true
 [node name="DashTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="DashCooldown" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+
+[node name="UpslashCooldown" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="TornadoCooldown" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
+[connection signal="timeout" from="UpslashCooldown" to="." method="_on_upslash_cooldown_timeout"]
+[connection signal="timeout" from="TornadoCooldown" to="." method="_on_tornado_cooldown_timeout"]

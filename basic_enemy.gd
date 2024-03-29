@@ -20,19 +20,19 @@ func _ready():
 	health = max_health
 	
 	# tell the main that a new enemy has been created
-	emit_signal("new_enemy", self)
+	emit_signal("new_enemy", self) 
 
 # when hit
-func take_damage(damage):
+func take_damage(damage, knockback, hitstunValue):
 	# get hit up
 	if !player.flipped:
-		velocity.y = -400
-		velocity.x += 100
+		velocity.y = knockback.y
+		velocity.x = knockback.x
 	else:
-		velocity.y = -400
-		velocity.x += -100
+		velocity.y = knockback.y
+		velocity.x = -knockback.x
 	hitStun = true
-	$HitStun.start()
+	$HitStun.start(hitstunValue)
 	# lose health
 	health -= damage
 	emit_signal("enemy_health_change", health)
@@ -43,8 +43,6 @@ func take_damage(damage):
 		queue_free()
 
 func _physics_process(delta):
-	update_health()
-	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
