@@ -6,6 +6,9 @@ const MAXSPEED = 500.0
 const ACCEL = 2000
 var flipped = false
 var cooldown = false
+var dashCooldown = false
+var upslashCooldown = false
+var tornadoCooldown = false
 var max_health = 200
 var health
 
@@ -77,6 +80,9 @@ func attack():
 		# attack
 		$sword/AnimationPlayer.play("swing")
 		$sword/AnimationPlayer.queue("RESET")
+		$sword/Sprite2D/HitBox.damage = 20
+		$sword/Sprite2D/HitBox.knockback = Vector2(200, -100)
+		$sword/Sprite2D/HitBox.hitStunValue = 1
 		
 		# put the player on cooldown
 		$AttackCooldown.start()
@@ -85,19 +91,25 @@ func attack():
 		# attack
 		$sword/AnimationPlayer.play("heavy_swing")
 		$sword/AnimationPlayer.queue("RESET")
+		$sword/Sprite2D/HitBox.damage = 45
+		$sword/Sprite2D/HitBox.knockback = Vector2(400, -200)
+		$sword/Sprite2D/HitBox.hitStunValue = 1.6
 		
 		# put the player on cooldown
 		$AttackCooldown.start()
 		cooldown = true
-	if Input.is_action_just_pressed("upslash") and !cooldown:
+	if Input.is_action_just_pressed("upslash") and !upslashCooldown:
 		# attack
 		$sword/AnimationPlayer.play("upslash")
 		$sword/AnimationPlayer.queue("RESET")
+		$sword/Sprite2D/HitBox.damage = 30
+		$sword/Sprite2D/HitBox.knockback = Vector2(100, -400)
+		$sword/Sprite2D/HitBox.hitStunValue = 1.3
 		
 		# put the player on cooldown
-		$AttackCooldown.start()
-		cooldown = true
-	if Input.is_action_just_pressed("dash") and !cooldown:
+		$UpslashCooldown.start()
+		upslashCooldown = true
+	if Input.is_action_just_pressed("dash") and !dashCooldown:
 		# attack
 		$sword/AnimationPlayer.play("dash")
 		var direction = Input.get_axis("move_left", "move_right")
@@ -105,20 +117,26 @@ func attack():
 		dash = true;
 		$DashTimer.start()
 		$sword/AnimationPlayer.queue("RESET")
+		$sword/Sprite2D/HitBox.damage = 25
+		$sword/Sprite2D/HitBox.knockback = Vector2(200, -100)
+		$sword/Sprite2D/HitBox.hitStunValue = 0.8
 		
 		# put the player on cooldown
-		$AttackCooldown.start()
-		cooldown = true
-	if Input.is_action_just_pressed("TornadoSlash") and !cooldown:
+		$DashCooldown.start()
+		dashCooldown = true
+	if Input.is_action_just_pressed("TornadoSlash") and !tornadoCooldown:
 		# attack
 		$sword/AnimationPlayer.play("TornadoAttack")
 		$sword/AnimationPlayer.queue("RESET")
+		$sword/Sprite2D/HitBox.damage = 20
+		$sword/Sprite2D/HitBox.knockback = Vector2(100, -200)
+		$sword/Sprite2D/HitBox.hitStunValue = 1
 		
 		# put the player on cooldown
-		$AttackCooldown.start()
-		cooldown = true
+		$TornadoCooldown.start()
+		tornadoCooldown = true
 
-func take_damage(damage):
+func take_damage(damage, knockback, hitStun):
 	# get hit up
 	velocity.y = -700
 	
@@ -141,3 +159,15 @@ func _on_dash_timer_timeout():
 	dash = false
 
 
+
+
+func _on_dash_cooldown_timeout():
+	dashCooldown = false
+
+
+func _on_upslash_cooldown_timeout():
+	upslashCooldown = false
+
+
+func _on_tornado_cooldown_timeout():
+	tornadoCooldown = false

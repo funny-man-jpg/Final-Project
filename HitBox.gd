@@ -2,6 +2,8 @@ class_name HitBox
 extends Area2D
 
 @export var damage = 10
+var knockback = Vector2(0,0)
+var hitStunValue = 1
 
 func _init():
 	collision_layer = 2
