@@ -3,28 +3,50 @@ extends CharacterBody2D
 signal enemy_health_change(new_health)
 signal new_enemy(enemy)
 
-const SPEED = 300.0
+# can be:
+# basic
+# sewer
+@export var enemyType : String
+
+const BASIC_SPEED = 300.0
+const SEWER_SPEED = 150.0
 const JUMP_VELOCITY = -400.0
 var flipped = false
 var cooldown = false
-var max_health = 100
+var max_basic_health = 100
+var max_sewer_health = 200
+var max_health
 var health
 var player
 var hitStun = false
+var healthbar
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
 	# set the enemies health to max
+	if self.enemyType == "basic":
+		max_health = max_basic_health
+	elif self.enemyType == "sewer":
+		max_health = max_sewer_health
+	
 	health = max_health
+	
+	# set up the enemy's healthbar
+	healthbar = $HealthBar
+	healthbar.max_value = max_health
+	healthbar.visible = false
+	
+	# set the enemy's display type tag (TEMPORARY)
+	$TemporaryTypeTag.set_text(self.enemyType)
 	
 	# tell the main that a new enemy has been created
 	emit_signal("new_enemy", self) 
 
 # when hit
 func take_damage(damage, knockback, hitstunValue):
-	# get hit up
+	# get knocked back and stunned
 	if !player.flipped:
 		velocity.y = knockback.y
 		velocity.x = knockback.x
@@ -33,8 +55,11 @@ func take_damage(damage, knockback, hitstunValue):
 		velocity.x = -knockback.x
 	hitStun = true
 	$HitStun.start(hitstunValue)
+	
 	# lose health
 	health -= damage
+	healthbar.visible = true
+	healthbar.value = health
 	emit_signal("enemy_health_change", health)
 	
 	# check if dead
@@ -79,7 +104,10 @@ func _physics_process(delta):
 						attack()
 				else:
 					# move towards the player
-					velocity.x = distanceToPlayer.normalized().x * SPEED
+					if self.enemyType == "basic":
+						velocity.x = distanceToPlayer.normalized().x * BASIC_SPEED
+					elif self.enemyType == "sewer":
+						velocity.x = distanceToPlayer.normalized().x * SEWER_SPEED
 	
 	# move
 	move_and_slide()
@@ -95,24 +123,27 @@ func _on_hit_stun_timeout():
 	hitStun = false
 
 func attack():
-	# choose between light or heavy attack
-	if randi() % 2 == 0:
-		$sword/AnimationPlayer.play("swing")
-	else:
-		$sword/AnimationPlayer.play("heavy_swing")
+	# attack based on the enemy type
+	if self.enemyType == "basic":
+		# choose between light or heavy attack
+		if randi() % 2 == 0:
+			$sword/AnimationPlayer.play("swing")
+			$sword/Sprite2D/HitBox.damage = 20
+		else:
+			$sword/AnimationPlayer.play("heavy_swing")
+			$sword/Sprite2D/HitBox.damage = 45
+	elif self.enemyType == "sewer":
+		# choose between heavy or special attack
+		if randi() % 2 == 0:
+			$sword/AnimationPlayer.play("heavy_swing")
+			$sword/Sprite2D/HitBox.damage = 45
+		else:
+			pass
+			$sword/AnimationPlayer.play("ultra_heavy_swing")
+			$sword/Sprite2D/HitBox.damage = 70
 	
 	$sword/AnimationPlayer.queue("RESET")
 	
 	# put the enemy on attack cooldown
 	$AttackCooldown.start()
 	cooldown = true
-	
-func update_health():
-	var healthbar = $HealthBar
-	
-	healthbar.value = health
-	
-	if health >= max_health:
-		healthbar.visible = false
-	else:
-		healthbar.visible = true

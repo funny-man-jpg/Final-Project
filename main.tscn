@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://5l1cpc7ivast"]
+[gd_scene load_steps=36 format=3 uid="uid://5l1cpc7ivast"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_4a271"]
 [ext_resource type="Texture2D" uid="uid://bd3upbk6p88j6" path="res://assets/2.png" id="2_cq6f5"]
@@ -33935,26 +33935,15 @@ scale = Vector2(50, 1)
 [node name="BasicEnemy" parent="." groups=["enemies"] instance=ExtResource("6_klgvo")]
 position = Vector2(1044, 247)
 
-[node name="Instructions" type="Label" parent="."]
-visible = false
-offset_left = 400.0
-offset_top = 553.0
-offset_right = 1309.0
-offset_bottom = 766.0
-theme_override_font_sizes/font_size = 50
-text = "Press 'a' and 'd' to move left and right
-Pressing 'spacebar' makes you jump
-Left click is basic attack, right click is heavy attack
-1 is an upslash, 2 is a dash, 3 is a tornado spin attack"
-
 [node name="BasicEnemy2" parent="." groups=["enemies"] instance=ExtResource("6_klgvo")]
 position = Vector2(1411, 141)
 
 [node name="BasicEnemy3" parent="." instance=ExtResource("6_klgvo")]
-position = Vector2(937, 1389)
+position = Vector2(257, 2150)
+enemyType = "sewer"
 
 [node name="BasicEnemy4" parent="." instance=ExtResource("6_klgvo")]
-position = Vector2(1837, 1388)
+position = Vector2(1965, 1452)
 
 [node name="Player" parent="." instance=ExtResource("2_xoa5f")]
 position = Vector2(93, 443)
@@ -33990,6 +33979,28 @@ theme_override_styles/background = SubResource("StyleBoxTexture_2xo5i")
 theme_override_styles/fill = SubResource("StyleBoxTexture_c7gl2")
 max_value = 8.0
 show_percentage = false
+
+[node name="UpslashNum" type="Label" parent="Player/Camera2D"]
+offset_left = -184.0
+offset_top = 173.0
+offset_right = -144.0
+offset_bottom = 196.0
+text = "1"
+
+[node name="DashNum" type="Label" parent="Player/Camera2D"]
+offset_left = 6.0
+offset_top = 178.0
+offset_right = 46.0
+offset_bottom = 201.0
+text = "2"
+
+[node name="TornadoNum" type="Label" parent="Player/Camera2D"]
+offset_left = 229.0
+offset_top = 178.0
+offset_right = 269.0
+offset_bottom = 201.0
+text = "3
+"
 
 [node name="Healthbar" type="TextureProgressBar" parent="Player"]
 offset_left = -79.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bskw17xq508gr"]
+[gd_scene load_steps=12 format=3 uid="uid://bskw17xq508gr"]
 
 [ext_resource type="Texture2D" uid="uid://2fl1fu2fs82w" path="res://assets/sword.png" id="1_blcox"]
 [ext_resource type="Script" path="res://HitBox.gd" id="2_aokph"]
@@ -32,6 +32,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2.00001, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_qrudl"]
@@ -172,6 +184,46 @@ tracks/1/keys = {
 "values": [true, false, true]
 }
 
+[sub_resource type="Animation" id="Animation_5upag"]
+resource_name = "ultra_heavy_swing"
+length = 1.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.7, 1.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.908612, -0.772214, -0.772214, 2.07535]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.7, 1.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(2.00001, 0), Vector2(-100, -87), Vector2(-100, -87), Vector2(-9, -6)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D/HitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dbbo0"]
 _data = {
 "RESET": SubResource("Animation_dh56r"),
@@ -179,6 +231,7 @@ _data = {
 "dash": SubResource("Animation_idjuf"),
 "heavy_swing": SubResource("Animation_6e7bs"),
 "swing": SubResource("Animation_8an24"),
+"ultra_heavy_swing": SubResource("Animation_5upag"),
 "upslash": SubResource("Animation_enmcy")
 }
 

@@ -154,20 +154,14 @@ func _on_attack_cooldown_timeout():
 	# the cooldown is over
 	cooldown = false
 
-
 func _on_dash_timer_timeout():
 	dash = false
-
-
-
 
 func _on_dash_cooldown_timeout():
 	dashCooldown = false
 
-
 func _on_upslash_cooldown_timeout():
 	upslashCooldown = false
-
 
 func _on_tornado_cooldown_timeout():
 	tornadoCooldown = false

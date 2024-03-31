@@ -25,8 +25,9 @@ size = Vector2(122, 126)
 size = Vector2(122, 120)
 
 [node name="BasicEnemy" type="CharacterBody2D"]
-position = Vector2(1, -1)
+position = Vector2(0, 1)
 script = ExtResource("1_kmxyo")
+enemyType = "basic"
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -60,6 +61,12 @@ offset_bottom = -20.0
 nine_patch_stretch = true
 texture_under = ExtResource("5_1xeiv")
 texture_progress = ExtResource("6_fpc60")
+
+[node name="TemporaryTypeTag" type="Label" parent="."]
+offset_left = -51.0
+offset_top = -51.0
+offset_right = 51.0
+offset_bottom = -15.0
 
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="HitStun" to="." method="_on_hit_stun_timeout"]
