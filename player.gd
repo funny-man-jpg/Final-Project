@@ -9,7 +9,9 @@ var cooldown = false
 var dashCooldown = false
 var upslashCooldown = false
 var tornadoCooldown = false
+var ladder_on = false
 var max_health = 200
+var ladder_speed = 500
 var health
 
 @export var jump_height : float
@@ -39,7 +41,20 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += get_gravity() * delta
-	
+		
+	if ladder_on == true:
+		velocity.y = 0
+		if Input.is_action_pressed("ladder_up"):
+			velocity.y = -ladder_speed
+			print("Moving up, velocity:", velocity.y)
+		
+		elif Input.is_action_pressed("ladder_down"):
+			velocity.y = ladder_speed
+			print("Moving down, velocity:", velocity.y)
+		else:
+			if not is_on_floor():
+				velocity.y += get_gravity() * delta
+		
 	
 	
 	# Handle jump.
