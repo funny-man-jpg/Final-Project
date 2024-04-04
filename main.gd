@@ -1,10 +1,18 @@
 extends Node
 
+signal reset_enemies
+
 @onready var Player = $Player
 @onready var player_health_bar = $Player/Healthbar
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# set up the title page and freeze the player until the game starts
+	$TitlePage/StartButton.pressed.connect(start_game)
+	$TitlePage.visible = true
+	$Player.move = false
+	
+	# set up the player's health bar
 	player_health_bar.max_value = Player.max_health
 	player_health_bar.value = player_health_bar.max_value
 	
@@ -18,6 +26,7 @@ func _ready():
 func _process(delta):
 	# check that the player is still alive
 	if $Player != null:
+		# update the ability cooldowns
 		$Player/Camera2D/UpslashCooldown.value = $Player/UpslashCooldown.time_left
 		$Player/Camera2D/DashCooldown.value = $Player/DashCooldown.time_left
 		$Player/Camera2D/TornadoCooldown.value = $Player/TornadoCooldown.time_left
@@ -32,3 +41,8 @@ func _on_basic_enemy_new_enemy(enemy):
 
 func _on_basic_enemy_enemy_health_change(new_health):
 	pass # Replace with function body.
+
+func start_game():
+	# make the title page dissapear and unfreeze the player
+	$TitlePage.visible = false
+	$Player.move = true

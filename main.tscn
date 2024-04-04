@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://5l1cpc7ivast"]
+[gd_scene load_steps=38 format=3 uid="uid://5l1cpc7ivast"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_4a271"]
 [ext_resource type="Texture2D" uid="uid://bd3upbk6p88j6" path="res://assets/2.png" id="2_cq6f5"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://5s0vp5qd1mjt" path="res://assets/tornadoCooldown.png" id="10_mmeps"]
 [ext_resource type="Texture2D" uid="uid://da75y2x6sk23d" path="res://assets/upslashCooldown.png" id="12_p1724"]
 [ext_resource type="Texture2D" uid="uid://bysod4btkp64k" path="res://assets/dashCooldown.png" id="13_58aem"]
+[ext_resource type="PackedScene" uid="uid://d1jhbjabrg5xv" path="res://title_page.tscn" id="20_naqo3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2vbqi"]
 size = Vector2(111, 826)
@@ -33949,7 +33950,7 @@ enemyType = "sewer"
 position = Vector2(1965, 1452)
 
 [node name="Player" parent="." instance=ExtResource("2_xoa5f")]
-position = Vector2(125, 487)
+position = Vector2(131, 473)
 metadata/_edit_group_ = true
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -34014,6 +34015,12 @@ offset_bottom = -10.0
 texture_under = ExtResource("3_3u314")
 texture_over = ExtResource("4_wlcha")
 texture_progress = ExtResource("5_llmcm")
+
+[node name="TitlePage" parent="." instance=ExtResource("20_naqo3")]
+offset_left = -520.0
+offset_top = 86.0
+offset_right = 797.0
+offset_bottom = 825.0
 
 [connection signal="body_entered" from="ladder" to="ladder" method="_on_ladder_body_entered"]
 [connection signal="body_exited" from="ladder" to="ladder" method="_on_body_exited"]

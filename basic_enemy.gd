@@ -20,11 +20,17 @@ var health
 var player
 var hitStun = false
 var healthbar
+var spawnX
+var spawnY
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
+	# store starting position
+	spawnX = self.position.x
+	spawnY = self.position.y
+	
 	# set the enemies health to max
 	if self.enemyType == "basic":
 		max_health = max_basic_health
@@ -43,6 +49,9 @@ func _ready():
 	
 	# tell the main that a new enemy has been created
 	emit_signal("new_enemy", self) 
+	
+	# connect itself to the player's death signal
+	player.player_death.connect(reset_self)
 
 # when hit
 func take_damage(damage, knockback, hitstunValue):
@@ -53,6 +62,7 @@ func take_damage(damage, knockback, hitstunValue):
 	else:
 		velocity.y = knockback.y
 		velocity.x = -knockback.x
+	
 	hitStun = true
 	$HitStun.start(hitstunValue)
 	
@@ -60,7 +70,7 @@ func take_damage(damage, knockback, hitstunValue):
 	health -= damage
 	healthbar.visible = true
 	healthbar.value = health
-	emit_signal("enemy_health_change", health)
+	#emit_signal("enemy_health_change", health)
 	
 	# check if dead
 	if health <= 0:
@@ -129,21 +139,63 @@ func attack():
 		if randi() % 2 == 0:
 			$sword/AnimationPlayer.play("swing")
 			$sword/Sprite2D/HitBox.damage = 20
+			$AttackCooldown.wait_time = 1.5
+			$sword/Sprite2D/HitBox.knockback = calculate_knockback("light")
 		else:
 			$sword/AnimationPlayer.play("heavy_swing")
 			$sword/Sprite2D/HitBox.damage = 45
+			$AttackCooldown.wait_time = 2.5
+			$sword/Sprite2D/HitBox.knockback = calculate_knockback("heavy")
 	elif self.enemyType == "sewer":
 		# choose between heavy or special attack
 		if randi() % 2 == 0:
 			$sword/AnimationPlayer.play("heavy_swing")
 			$sword/Sprite2D/HitBox.damage = 45
+			$AttackCooldown.wait_time = 2.5
+			$sword/Sprite2D/HitBox.knockback = calculate_knockback("heavy")
 		else:
 			pass
 			$sword/AnimationPlayer.play("ultra_heavy_swing")
 			$sword/Sprite2D/HitBox.damage = 70
+			$AttackCooldown.wait_time = 3
+			$sword/Sprite2D/HitBox.knockback = calculate_knockback("ultra_heavy")
 	
 	$sword/AnimationPlayer.queue("RESET")
 	
 	# put the enemy on attack cooldown
 	$AttackCooldown.start()
 	cooldown = true
+
+func calculate_knockback(attack):
+	var knockbackX
+	var knockbackY
+	
+	# check if the enemy is flipped and set x accordingly
+	if self.flipped:
+		knockbackX = -1
+	else:
+		knockbackX = 1
+	
+	# check the type of attack and set the knockback values
+	if attack == "light":
+		knockbackX *= 200
+		knockbackY = -100
+	elif attack == "heavy":
+		knockbackX *= 400
+		knockbackY = -200
+	else:
+		knockbackX *= 600
+		knockbackY = -300
+	
+	return Vector2(knockbackX, knockbackY)
+
+func reset_self():
+	# set position back to spawn position
+	self.position.x = spawnX
+	self.position.y = spawnY
+	
+	# set health back to max
+	health = max_health
+	
+	# re-hide healthbar
+	healthbar.visible = false

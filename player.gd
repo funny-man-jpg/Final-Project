@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal health_change(new_health)
+signal player_death()
 
 const MAXSPEED = 500.0
 const ACCEL = 2000
@@ -13,6 +14,10 @@ var ladder_on = false
 var max_health = 200
 var ladder_speed = 500
 var health
+var move
+var spawnX = 131
+var spawnY = 473
+var knockbacked
 
 @export var jump_height : float
 @export var jump_time_to_peak: float
@@ -38,56 +43,55 @@ func get_gravity():
 	return jump_gravity if velocity.y < 0.0 else fall_gravity
 
 func _physics_process(delta):
-	# Add the gravity.
-	if not is_on_floor():
-		velocity.y += get_gravity() * delta
+	if move:
+		# Add the gravity.
+		if not is_on_floor():
+			velocity.y += get_gravity() * delta
 		
-	if ladder_on == true:
-		velocity.y = 0
-		if Input.is_action_pressed("ladder_up"):
-			velocity.y = -ladder_speed
-			print("Moving up, velocity:", velocity.y)
+		if ladder_on == true:
+			velocity.y = 0
+			if Input.is_action_pressed("ladder_up"):
+				velocity.y = -ladder_speed
+			elif Input.is_action_pressed("ladder_down"):
+				velocity.y = ladder_speed
+			else:
+				if not is_on_floor():
+					velocity.y += get_gravity() * delta
+			
 		
-		elif Input.is_action_pressed("ladder_down"):
-			velocity.y = ladder_speed
-			print("Moving down, velocity:", velocity.y)
-		else:
-			if not is_on_floor():
-				velocity.y += get_gravity() * delta
 		
-	
-	
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = jump_velocity
+		# Handle jump.
+		if Input.is_action_just_pressed("jump") and is_on_floor():
+			velocity.y = jump_velocity
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_axis("move_left", "move_right")
-	# if someone has a more efficient way for this please fix it
-	var swordPosition = position.x - $sword.position.x
-	#Use linear algebra later
-	if direction > 0:
-		$AnimatedSprite2D.flip_h = false
-		$sword.position.x = 40
-		if flipped == true:
-			flipped = false
-			$sword.scale.x *= -1
-	elif direction < 0:
-		$AnimatedSprite2D.flip_h = true
-		$sword.position.x = -40
-		if flipped == false:
-			flipped = true
-			$sword.scale.x *= -1
+		# Get the input direction and handle the movement/deceleration.
+		# As good practice, you should replace UI actions with custom gameplay actions.
+		var direction = Input.get_axis("move_left", "move_right")
+		# if someone has a more efficient way for this please fix it
+		var swordPosition = position.x - $sword.position.x
+		#Use linear algebra later
+		if direction > 0:
+			$AnimatedSprite2D.flip_h = false
+			$sword.position.x = 40
+			if flipped == true:
+				flipped = false
+				$sword.scale.x *= -1
+		elif direction < 0:
+			$AnimatedSprite2D.flip_h = true
+			$sword.position.x = -40
+			if flipped == false:
+				flipped = true
+				$sword.scale.x *= -1
 		
-	if direction and dash == false:
-		velocity.x += direction * ACCEL * delta
-	elif dash == false:
-		velocity.x = lerp(velocity.x, 0.0, 0.2)
-	if dash == false:
-		velocity.x = clamp(velocity.x, -MAXSPEED, MAXSPEED)
-	attack()
-	move_and_slide()
+		if direction and dash == false:
+			velocity.x += direction * ACCEL * delta
+		elif dash == false:
+			velocity.x = lerp(velocity.x, 0.0, 0.2)
+		if dash == false:
+			velocity.x = clamp(velocity.x, -MAXSPEED, MAXSPEED)
+		
+		attack()
+		move_and_slide()
 
 func attack():
 	# check that the player tried to attack and that they're not on cooldown
@@ -152,8 +156,9 @@ func attack():
 		tornadoCooldown = true
 
 func take_damage(damage, knockback, hitStun):
-	# get hit up
-	velocity.y = -700
+	# get knocked back
+	velocity.x = knockback.x
+	velocity.y = knockback.y
 	
 	# lose health
 	health -= damage
@@ -162,8 +167,8 @@ func take_damage(damage, knockback, hitStun):
 	
 	# check if dead
 	if health <= 0:
-		# remove self from the game
-		queue_free()
+		# reset player
+		respawn()
 
 func _on_attack_cooldown_timeout():
 	# the cooldown is over
@@ -180,3 +185,26 @@ func _on_upslash_cooldown_timeout():
 
 func _on_tornado_cooldown_timeout():
 	tornadoCooldown = false
+
+func respawn():
+	# tell the main that the player died
+	emit_signal("player_death")
+	
+	# put the player back at spawn
+	self.position.x = spawnX
+	self.position.y = spawnY
+	
+	# set the player's health to max
+	health = max_health
+	emit_signal("health_change", health)
+	
+	# reset the player's cooldowns and timers
+	$AttackCooldown.stop()
+	$DashTimer.stop()
+	$DashCooldown.stop()
+	$UpslashCooldown.stop()
+	$TornadoCooldown.stop()
+	
+	# reset the player's velocity to 0
+	self.velocity.y = 0
+	self.velocity.x = 0

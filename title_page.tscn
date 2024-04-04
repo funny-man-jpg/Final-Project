@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1jhbjabrg5xv"]
+
+[ext_resource type="Texture2D" uid="uid://lc5oan5de2ml" path="res://assets/Night.png" id="1_cuyoy"]
+
+[node name="TitlePage" type="TextureRect"]
+offset_right = 1394.0
+offset_bottom = 808.0
+texture = ExtResource("1_cuyoy")
+expand_mode = 1
+
+[node name="GameTitle" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.185796
+anchor_top = 0.24505
+anchor_right = 0.818508
+anchor_bottom = 0.414604
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "GAME NAME HERE"
+metadata/_edit_use_anchors_ = true
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 0
+anchor_left = 0.380918
+anchor_top = 0.688119
+anchor_right = 0.619799
+anchor_bottom = 0.870049
+theme_override_font_sizes/font_size = 49
+text = "START"
+metadata/_edit_use_anchors_ = true
