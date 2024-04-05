@@ -186,7 +186,7 @@ func take_damage(damage, knockback, hitStun):
 	if health <= 0:
 		animPlayer.play("death")
 		# reset player
-		respawn()
+		#respawn()
 
 func _on_attack_cooldown_timeout():
 	# the cooldown is over
@@ -246,6 +246,7 @@ func _on_animated_sprite_2d_animation_finished():
 	if animPlayer.animation == "climb":
 		animPlayer.play("idle")
 	if animPlayer.animation == "death":
+		respawn()
 		animPlayer.play("idle")
 	if animPlayer.animation == "hurt":
 		animPlayer.play("idle")

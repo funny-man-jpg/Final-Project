@@ -240,7 +240,7 @@ _data = {
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(2.00001, 0)
 rotation = 0.908612
-scale = Vector2(0.511712, 0.486826)
+scale = Vector2(0.37561, 0.307026)
 texture = ExtResource("1_blcox")
 offset = Vector2(1.07372, -50.3815)
 metadata/_edit_group_ = true

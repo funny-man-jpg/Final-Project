@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://bmmoiannutw30"]
+[gd_scene load_steps=80 format=3 uid="uid://bmmoiannutw30"]
 
 [ext_resource type="Texture2D" uid="uid://dmy02bctd5msi" path="res://assets/player.png" id="1_4vavj"]
 [ext_resource type="Script" path="res://player.gd" id="1_yvb2d"]
@@ -195,10 +195,6 @@ region = Rect2(144, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_fgn8o"]
 atlas = ExtResource("6_sbi5j")
 region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1nbgq"]
-atlas = ExtResource("6_sbi5j")
-region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ymn2y"]
 atlas = ExtResource("8_ee6c4")
@@ -431,9 +427,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fgn8o")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1nbgq")
 }],
 "loop": false,
 "name": &"death",
@@ -534,10 +527,8 @@ jump_time_to_descent = 0.5
 position = Vector2(53, -23)
 scale = Vector2(4.79274, 4.04896)
 sprite_frames = SubResource("SpriteFrames_ifkcn")
-animation = &"attack4"
+animation = &"death"
 autoplay = "idle"
-frame = 5
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_01rcu")

@@ -26,6 +26,8 @@ var spawnY
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+@onready var animEnemy = $AnimatedSprite2D
+
 func _ready():
 	# store starting position
 	spawnX = self.position.x
@@ -74,8 +76,9 @@ func take_damage(damage, knockback, hitstunValue):
 	
 	# check if dead
 	if health <= 0:
+		animEnemy.play("death")
 		# remove itself from the game
-		queue_free()
+		#queue_free()
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -89,6 +92,7 @@ func _physics_process(delta):
 			
 			# if the player is too far away, don't do anything
 			if distanceToPlayer.length() < 750:
+				#animEnemy.play("idle")
 				# point towards the player
 				if distanceToPlayer.x > 0:
 					$AnimatedSprite2D.flip_h = false
@@ -116,8 +120,10 @@ func _physics_process(delta):
 					# move towards the player
 					if self.enemyType == "basic":
 						velocity.x = distanceToPlayer.normalized().x * BASIC_SPEED
+						animEnemy.play("run")
 					elif self.enemyType == "sewer":
 						velocity.x = distanceToPlayer.normalized().x * SEWER_SPEED
+						animEnemy.play("run")
 	
 	# move
 	move_and_slide()
@@ -138,11 +144,13 @@ func attack():
 		# choose between light or heavy attack
 		if randi() % 2 == 0:
 			$sword/AnimationPlayer.play("swing")
+			animEnemy.play("attack")
 			$sword/Sprite2D/HitBox.damage = 20
 			$AttackCooldown.wait_time = 1.5
 			$sword/Sprite2D/HitBox.knockback = calculate_knockback("light")
 		else:
 			$sword/AnimationPlayer.play("heavy_swing")
+			animEnemy.play("attack")
 			$sword/Sprite2D/HitBox.damage = 45
 			$AttackCooldown.wait_time = 2.5
 			$sword/Sprite2D/HitBox.knockback = calculate_knockback("heavy")
@@ -150,12 +158,14 @@ func attack():
 		# choose between heavy or special attack
 		if randi() % 2 == 0:
 			$sword/AnimationPlayer.play("heavy_swing")
+			animEnemy.play("attack")
 			$sword/Sprite2D/HitBox.damage = 45
 			$AttackCooldown.wait_time = 2.5
 			$sword/Sprite2D/HitBox.knockback = calculate_knockback("heavy")
 		else:
 			pass
 			$sword/AnimationPlayer.play("ultra_heavy_swing")
+			animEnemy.play("attack")
 			$sword/Sprite2D/HitBox.damage = 70
 			$AttackCooldown.wait_time = 3
 			$sword/Sprite2D/HitBox.knockback = calculate_knockback("ultra_heavy")
@@ -199,3 +209,12 @@ func reset_self():
 	
 	# re-hide healthbar
 	healthbar.visible = false
+
+
+func _on_animated_sprite_2d_animation_finished():
+	if animEnemy.animation == "attack":
+		animEnemy.play("run")
+	if animEnemy.animation == "death":
+		queue_free()
+	#if animEnemy.animation == "run":
+		#animEnemy.play("idle")
