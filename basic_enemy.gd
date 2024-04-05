@@ -148,12 +148,14 @@ func attack():
 			$sword/Sprite2D/HitBox.damage = 20
 			$AttackCooldown.wait_time = 1.5
 			$sword/Sprite2D/HitBox.knockback = calculate_knockback("light")
+			$sword/Sprite2D/HitBox.hitStunValue = 0.4
 		else:
 			$sword/AnimationPlayer.play("heavy_swing")
 			animEnemy.play("attack")
 			$sword/Sprite2D/HitBox.damage = 45
 			$AttackCooldown.wait_time = 2.5
 			$sword/Sprite2D/HitBox.knockback = calculate_knockback("heavy")
+			$sword/Sprite2D/HitBox.hitStunValue = 0.6
 	elif self.enemyType == "sewer":
 		# choose between heavy or special attack
 		if randi() % 2 == 0:
@@ -162,6 +164,7 @@ func attack():
 			$sword/Sprite2D/HitBox.damage = 45
 			$AttackCooldown.wait_time = 2.5
 			$sword/Sprite2D/HitBox.knockback = calculate_knockback("heavy")
+			$sword/Sprite2D/HitBox.hitStunValue = 0.6
 		else:
 			pass
 			$sword/AnimationPlayer.play("ultra_heavy_swing")
@@ -169,6 +172,7 @@ func attack():
 			$sword/Sprite2D/HitBox.damage = 70
 			$AttackCooldown.wait_time = 3
 			$sword/Sprite2D/HitBox.knockback = calculate_knockback("ultra_heavy")
+			$sword/Sprite2D/HitBox.hitStunValue = 0.8
 	
 	$sword/AnimationPlayer.queue("RESET")
 	

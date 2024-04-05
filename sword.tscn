@@ -1,5 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://bskw17xq508gr"]
+[gd_scene load_steps=13 format=3 uid="uid://bskw17xq508gr"]
 
+[ext_resource type="Script" path="res://sword.gd" id="1_7n7n0"]
 [ext_resource type="Texture2D" uid="uid://2fl1fu2fs82w" path="res://assets/sword.png" id="1_blcox"]
 [ext_resource type="Script" path="res://HitBox.gd" id="2_aokph"]
 
@@ -236,6 +237,7 @@ _data = {
 }
 
 [node name="sword" type="Node2D"]
+script = ExtResource("1_7n7n0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(2.00001, 0)
@@ -258,3 +260,5 @@ disabled = true
 libraries = {
 "": SubResource("AnimationLibrary_dbbo0")
 }
+
+[connection signal="hit" from="Sprite2D/HitBox" to="." method="_on_hit_box_hit"]

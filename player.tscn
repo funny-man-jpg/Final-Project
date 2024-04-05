@@ -524,10 +524,10 @@ jump_time_to_peak = 0.6
 jump_time_to_descent = 0.5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(53, -23)
-scale = Vector2(4.79274, 4.04896)
+position = Vector2(30.5, -15.5)
+scale = Vector2(3.02083, 2.47917)
 sprite_frames = SubResource("SpriteFrames_ifkcn")
-animation = &"death"
+animation = &"attack4"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -562,9 +562,14 @@ one_shot = true
 wait_time = 8.0
 one_shot = true
 
+[node name="hitStun" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="hit" from="sword" to="." method="_on_sword_hit"]
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
 [connection signal="timeout" from="UpslashCooldown" to="." method="_on_upslash_cooldown_timeout"]
 [connection signal="timeout" from="TornadoCooldown" to="." method="_on_tornado_cooldown_timeout"]
+[connection signal="timeout" from="hitStun" to="." method="_on_hit_stun_timeout"]

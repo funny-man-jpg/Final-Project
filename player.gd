@@ -18,6 +18,7 @@ var move
 var spawnX = 131
 var spawnY = 473
 var knockbacked
+var hitstun = false
 
 @export var jump_height : float
 @export var jump_time_to_peak: float
@@ -48,61 +49,63 @@ func _physics_process(delta):
 		# Add the gravity.
 		if not is_on_floor():
 			velocity.y += get_gravity() * delta
-		
-		if ladder_on == true:
-			velocity.y = 0
-			if Input.is_action_pressed("ladder_up"):
-				velocity.y = -ladder_speed
-				animPlayer.play("climb")
-			elif Input.is_action_pressed("ladder_down"):
-				velocity.y = ladder_speed
-				animPlayer.play("climb")
-			else:
+		if hitstun == false:
+			if ladder_on == true:
+				velocity.y = 0
+				if Input.is_action_pressed("ladder_up"):
+					velocity.y = -ladder_speed
+					animPlayer.play("climb")
+				elif Input.is_action_pressed("ladder_down"):
+					velocity.y = ladder_speed
+					animPlayer.play("climb")
+				else:
+					#animPlayer.play("idle")
+					if not is_on_floor():
+						velocity.y += get_gravity() * delta
+				
+			
+			
+			# Handle jump.
+			if Input.is_action_just_pressed("jump") and is_on_floor():
+				velocity.y = jump_velocity
+				animPlayer.play("jump")
+				
+			#if velocity.y > 0:
 				#animPlayer.play("idle")
-				if not is_on_floor():
-					velocity.y += get_gravity() * delta
-			
-		
-		
-		# Handle jump.
-		if Input.is_action_just_pressed("jump") and is_on_floor():
-			velocity.y = jump_velocity
-			animPlayer.play("jump")
-			
-		#if velocity.y > 0:
-			#animPlayer.play("idle")
 
-		# Get the input direction and handle the movement/deceleration.
-		# As good practice, you should replace UI actions with custom gameplay actions.
-		var direction = Input.get_axis("move_left", "move_right")
-		# if someone has a more efficient way for this please fix it
-		var swordPosition = position.x - $sword.position.x
-		#Use linear algebra later
-		if direction > 0:
-			$AnimatedSprite2D.flip_h = false
-			$sword.position.x = 40
-			if flipped == true:
-				flipped = false
-				$sword.scale.x *= -1
-		elif direction < 0:
-			$AnimatedSprite2D.flip_h = true
-			$sword.position.x = -40
-			if flipped == false:
-				flipped = true
-				$sword.scale.x *= -1
-		
-		if direction and dash == false:
-			velocity.x += direction * ACCEL * delta
-			animPlayer.play("run")
-		elif dash == false:
-			velocity.x = lerp(velocity.x, 0.0, 0.2)
-			#if abs(velocity.x) < 10 and is_on_floor() and animPlayer.animation == "run":
-				#animPlayer.play("idle")
-		if dash == false:
-			velocity.x = clamp(velocity.x, -MAXSPEED, MAXSPEED)
+			# Get the input direction and handle the movement/deceleration.
+			# As good practice, you should replace UI actions with custom gameplay actions.
+			var direction = Input.get_axis("move_left", "move_right")
+			# if someone has a more efficient way for this please fix it
+			var swordPosition = position.x - $sword.position.x
+			#Use linear algebra later
+			if direction > 0:
+				$AnimatedSprite2D.flip_h = false
+				$sword.position.x = 40
+				if flipped == true:
+					flipped = false
+					$sword.scale.x *= -1
+			elif direction < 0:
+				$AnimatedSprite2D.flip_h = true
+				$sword.position.x = -40
+				if flipped == false:
+					flipped = true
+					$sword.scale.x *= -1
+			
+			if direction and dash == false:
+				velocity.x += direction * ACCEL * delta
+				if !$sword/AnimationPlayer.is_playing():
+					animPlayer.play("run")
+			elif dash == false:
+				velocity.x = lerp(velocity.x, 0.0, 0.2)
+				#if abs(velocity.x) < 10 and is_on_floor() and animPlayer.animation == "run":
+					#animPlayer.play("idle")
+			if dash == false:
+				velocity.x = clamp(velocity.x, -MAXSPEED, MAXSPEED)
 		
 		attack()
 		move_and_slide()
+		
 
 func attack():
 	# check that the player tried to attack and that they're not on cooldown
@@ -112,7 +115,7 @@ func attack():
 		$sword/AnimationPlayer.queue("RESET")
 		animPlayer.play("attack1")
 		$sword/Sprite2D/HitBox.damage = 20
-		$sword/Sprite2D/HitBox.knockback = Vector2(200, -100)
+		$sword/Sprite2D/HitBox.knockback = Vector2(200, -300)
 		$sword/Sprite2D/HitBox.hitStunValue = 1
 		
 		# put the player on cooldown
@@ -124,8 +127,8 @@ func attack():
 		$sword/AnimationPlayer.queue("RESET")
 		animPlayer.play("attack2")
 		$sword/Sprite2D/HitBox.damage = 45
-		$sword/Sprite2D/HitBox.knockback = Vector2(400, -200)
-		$sword/Sprite2D/HitBox.hitStunValue = 1.6
+		$sword/Sprite2D/HitBox.knockback = Vector2(400, -400)
+		$sword/Sprite2D/HitBox.hitStunValue = 1.4
 		
 		# put the player on cooldown
 		$AttackCooldown.start()
@@ -136,7 +139,7 @@ func attack():
 		$sword/AnimationPlayer.queue("RESET")
 		animPlayer.play("attack3")
 		$sword/Sprite2D/HitBox.damage = 30
-		$sword/Sprite2D/HitBox.knockback = Vector2(100, -400)
+		$sword/Sprite2D/HitBox.knockback = Vector2(100, -500)
 		$sword/Sprite2D/HitBox.hitStunValue = 1.3
 		
 		# put the player on cooldown
@@ -153,7 +156,7 @@ func attack():
 		$sword/AnimationPlayer.queue("RESET")
 		$sword/Sprite2D/HitBox.damage = 25
 		$sword/Sprite2D/HitBox.knockback = Vector2(200, -100)
-		$sword/Sprite2D/HitBox.hitStunValue = 0.8
+		$sword/Sprite2D/HitBox.hitStunValue = 0.5
 		
 		# put the player on cooldown
 		$DashCooldown.start()
@@ -164,7 +167,7 @@ func attack():
 		animPlayer.play("attack4")
 		$sword/AnimationPlayer.queue("RESET")
 		$sword/Sprite2D/HitBox.damage = 20
-		$sword/Sprite2D/HitBox.knockback = Vector2(100, -200)
+		$sword/Sprite2D/HitBox.knockback = Vector2(100, -300)
 		$sword/Sprite2D/HitBox.hitStunValue = 1
 		
 		# put the player on cooldown
@@ -176,7 +179,8 @@ func take_damage(damage, knockback, hitStun):
 	# get knocked back
 	velocity.x = knockback.x
 	velocity.y = knockback.y
-	
+	hitstun = true
+	$hitStun.start(hitStun)
 	# lose health
 	health -= damage
 	# get the health signal
@@ -217,11 +221,11 @@ func respawn():
 	emit_signal("health_change", health)
 	
 	# reset the player's cooldowns and timers
-	$AttackCooldown.stop()
-	$DashTimer.stop()
-	$DashCooldown.stop()
-	$UpslashCooldown.stop()
-	$TornadoCooldown.stop()
+	#$AttackCooldown.stop()
+	#$DashTimer.stop()
+	#$DashCooldown.stop()
+	#$UpslashCooldown.stop()
+	#$TornadoCooldown.stop()
 	
 	# reset the player's velocity to 0
 	self.velocity.y = 0
@@ -250,3 +254,11 @@ func _on_animated_sprite_2d_animation_finished():
 		animPlayer.play("idle")
 	if animPlayer.animation == "hurt":
 		animPlayer.play("idle")
+
+
+func _on_hit_stun_timeout():
+	hitstun = false
+
+
+func _on_sword_hit():
+	dash = false
