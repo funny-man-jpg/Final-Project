@@ -34008,15 +34008,16 @@ text = "3
 "
 
 [node name="Healthbar" type="TextureProgressBar" parent="Player"]
-offset_left = -79.0
-offset_top = -142.0
-offset_right = 83.0
-offset_bottom = -10.0
+offset_left = -73.0
+offset_top = -156.0
+offset_right = 89.0
+offset_bottom = -24.0
 texture_under = ExtResource("3_3u314")
 texture_over = ExtResource("4_wlcha")
 texture_progress = ExtResource("5_llmcm")
 
 [node name="TitlePage" parent="." instance=ExtResource("20_naqo3")]
+visible = false
 offset_left = -520.0
 offset_top = 86.0
 offset_right = 797.0

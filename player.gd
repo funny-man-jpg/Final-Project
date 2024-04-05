@@ -26,6 +26,7 @@ var knockbacked
 @onready var jump_velocity : float = ((2.0 * jump_height) / jump_time_to_peak) * -1.0
 @onready var jump_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
 @onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
+@onready var animPlayer = $AnimatedSprite2D
 
 var dash = false
 
@@ -52,9 +53,12 @@ func _physics_process(delta):
 			velocity.y = 0
 			if Input.is_action_pressed("ladder_up"):
 				velocity.y = -ladder_speed
+				animPlayer.play("climb")
 			elif Input.is_action_pressed("ladder_down"):
 				velocity.y = ladder_speed
+				animPlayer.play("climb")
 			else:
+				#animPlayer.play("idle")
 				if not is_on_floor():
 					velocity.y += get_gravity() * delta
 			
@@ -63,6 +67,10 @@ func _physics_process(delta):
 		# Handle jump.
 		if Input.is_action_just_pressed("jump") and is_on_floor():
 			velocity.y = jump_velocity
+			animPlayer.play("jump")
+			
+		#if velocity.y > 0:
+			#animPlayer.play("idle")
 
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with custom gameplay actions.
@@ -85,8 +93,11 @@ func _physics_process(delta):
 		
 		if direction and dash == false:
 			velocity.x += direction * ACCEL * delta
+			animPlayer.play("run")
 		elif dash == false:
 			velocity.x = lerp(velocity.x, 0.0, 0.2)
+			#if abs(velocity.x) < 10 and is_on_floor() and animPlayer.animation == "run":
+				#animPlayer.play("idle")
 		if dash == false:
 			velocity.x = clamp(velocity.x, -MAXSPEED, MAXSPEED)
 		
@@ -99,6 +110,7 @@ func attack():
 		# attack
 		$sword/AnimationPlayer.play("swing")
 		$sword/AnimationPlayer.queue("RESET")
+		animPlayer.play("attack1")
 		$sword/Sprite2D/HitBox.damage = 20
 		$sword/Sprite2D/HitBox.knockback = Vector2(200, -100)
 		$sword/Sprite2D/HitBox.hitStunValue = 1
@@ -110,6 +122,7 @@ func attack():
 		# attack
 		$sword/AnimationPlayer.play("heavy_swing")
 		$sword/AnimationPlayer.queue("RESET")
+		animPlayer.play("attack2")
 		$sword/Sprite2D/HitBox.damage = 45
 		$sword/Sprite2D/HitBox.knockback = Vector2(400, -200)
 		$sword/Sprite2D/HitBox.hitStunValue = 1.6
@@ -121,6 +134,7 @@ func attack():
 		# attack
 		$sword/AnimationPlayer.play("upslash")
 		$sword/AnimationPlayer.queue("RESET")
+		animPlayer.play("attack3")
 		$sword/Sprite2D/HitBox.damage = 30
 		$sword/Sprite2D/HitBox.knockback = Vector2(100, -400)
 		$sword/Sprite2D/HitBox.hitStunValue = 1.3
@@ -131,6 +145,7 @@ func attack():
 	if Input.is_action_just_pressed("dash") and !dashCooldown:
 		# attack
 		$sword/AnimationPlayer.play("dash")
+		animPlayer.play("attack5")
 		var direction = Input.get_axis("move_left", "move_right")
 		velocity.x = 1000 * direction
 		dash = true;
@@ -146,6 +161,7 @@ func attack():
 	if Input.is_action_just_pressed("TornadoSlash") and !tornadoCooldown:
 		# attack
 		$sword/AnimationPlayer.play("TornadoAttack")
+		animPlayer.play("attack4")
 		$sword/AnimationPlayer.queue("RESET")
 		$sword/Sprite2D/HitBox.damage = 20
 		$sword/Sprite2D/HitBox.knockback = Vector2(100, -200)
@@ -156,6 +172,7 @@ func attack():
 		tornadoCooldown = true
 
 func take_damage(damage, knockback, hitStun):
+	animPlayer.play("hurt")
 	# get knocked back
 	velocity.x = knockback.x
 	velocity.y = knockback.y
@@ -167,6 +184,7 @@ func take_damage(damage, knockback, hitStun):
 	
 	# check if dead
 	if health <= 0:
+		animPlayer.play("death")
 		# reset player
 		respawn()
 
@@ -208,3 +226,26 @@ func respawn():
 	# reset the player's velocity to 0
 	self.velocity.y = 0
 	self.velocity.x = 0
+
+#animation play
+func _on_animated_sprite_2d_animation_finished():
+	if animPlayer.animation == "attack1":
+		animPlayer.play("idle")
+	if animPlayer.animation == "attack2":
+		animPlayer.play("idle")
+	if animPlayer.animation == "attack3":
+		animPlayer.play("idle")
+	if animPlayer.animation == "attack4":
+		animPlayer.play("idle")
+	if animPlayer.animation == "attack5":
+		animPlayer.play("idle")
+	if animPlayer.animation == "run":
+		animPlayer.play("idle")
+	if animPlayer.animation == "jump":
+		animPlayer.play("idle")
+	if animPlayer.animation == "climb":
+		animPlayer.play("idle")
+	if animPlayer.animation == "death":
+		animPlayer.play("idle")
+	if animPlayer.animation == "hurt":
+		animPlayer.play("idle")
