@@ -14,6 +14,5 @@ func getFlipped():
 func _process(delta):
 	pass
 
-
 func _on_hit_box_hit():
 	emit_signal("hit")

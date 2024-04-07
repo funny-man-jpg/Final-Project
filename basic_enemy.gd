@@ -51,9 +51,6 @@ func _ready():
 	
 	# tell the main that a new enemy has been created
 	emit_signal("new_enemy", self) 
-	
-	# connect itself to the player's death signal
-	player.player_death.connect(reset_self)
 
 # when hit
 func take_damage(damage, knockback, hitstunValue):
@@ -130,6 +127,9 @@ func _physics_process(delta):
 
 func getPlayer(p):
 	player = p
+	
+	# connect itself to the player's death signal
+	player.player_death.connect(reset_self)
 
 func _on_attack_cooldown_timeout():
 	# the enemy's attack cooldown is over
@@ -214,7 +214,6 @@ func reset_self():
 	# re-hide healthbar
 	healthbar.visible = false
 
-
 func _on_animated_sprite_2d_animation_finished():
 	if animEnemy.animation == "attack":
 		animEnemy.play("run")
@@ -222,3 +221,6 @@ func _on_animated_sprite_2d_animation_finished():
 		queue_free()
 	#if animEnemy.animation == "run":
 		#animEnemy.play("idle")
+
+func delete_self():
+	queue_free()

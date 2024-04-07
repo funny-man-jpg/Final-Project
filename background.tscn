@@ -112,3 +112,23 @@ position = Vector2(9038, -640)
 scale = Vector2(2.00617, 12.156)
 texture = ExtResource("6_6qtt5")
 centered = false
+
+[node name="ParallaxLayer12" type="ParallaxLayer" parent="."]
+
+[node name="1" type="Sprite2D" parent="ParallaxLayer12"]
+position = Vector2(-612, 325.5)
+scale = Vector2(0.609118, 0.649)
+texture = ExtResource("4_1lco0")
+
+[node name="ParallaxLayer13" type="ParallaxLayer" parent="."]
+
+[node name="2" type="Sprite2D" parent="ParallaxLayer13"]
+position = Vector2(-1002, -562)
+scale = Vector2(1, 1.126)
+texture = ExtResource("5_ovl6d")
+
+[node name="ParallaxLayer14" type="ParallaxLayer" parent="."]
+
+[node name="1" type="Sprite2D" parent="ParallaxLayer14"]
+position = Vector2(-780, -498)
+texture = ExtResource("8_th305")

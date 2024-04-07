@@ -14,11 +14,12 @@ var ladder_on = false
 var max_health = 200
 var ladder_speed = 500
 var health
-var move
-var spawnX = 131
-var spawnY = 473
+var move = true
+var spawnX = -359
+var spawnY = 542
 var knockbacked
 var hitstun = false
+var dying = false
 
 @export var jump_height : float
 @export var jump_time_to_peak: float
@@ -45,7 +46,7 @@ func get_gravity():
 	return jump_gravity if velocity.y < 0.0 else fall_gravity
 
 func _physics_process(delta):
-	if move:
+	if move and !dying:
 		# Add the gravity.
 		if not is_on_floor():
 			velocity.y += get_gravity() * delta
@@ -189,6 +190,7 @@ func take_damage(damage, knockback, hitStun):
 	# check if dead
 	if health <= 0:
 		animPlayer.play("death")
+		dying = true
 		# reset player
 		#respawn()
 
@@ -230,6 +232,9 @@ func respawn():
 	# reset the player's velocity to 0
 	self.velocity.y = 0
 	self.velocity.x = 0
+	
+	# reset the dying variable
+	dying = false
 
 #animation play
 func _on_animated_sprite_2d_animation_finished():
@@ -255,10 +260,8 @@ func _on_animated_sprite_2d_animation_finished():
 	if animPlayer.animation == "hurt":
 		animPlayer.play("idle")
 
-
 func _on_hit_stun_timeout():
 	hitstun = false
-
 
 func _on_sword_hit():
 	dash = false

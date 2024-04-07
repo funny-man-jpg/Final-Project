@@ -18,7 +18,7 @@ anchor_bottom = 0.414604
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 100
-text = "GAME NAME HERE"
+text = "Twilight City Fatalis"
 metadata/_edit_use_anchors_ = true
 
 [node name="StartButton" type="Button" parent="."]

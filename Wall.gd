@@ -11,4 +11,6 @@ func _process(delta):
 	pass
 
 func take_damage(damage, knockback, hitstun):
-	queue_free()
+	# check that a heavy attack was felt
+	if damage == 45:
+		queue_free()
