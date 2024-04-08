@@ -8,6 +8,8 @@ var stage = 1
 var player
 var healthbar
 
+@onready var AnimPlayer = $AnimatedSprite2D
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# set up health and healthbar
@@ -53,6 +55,7 @@ func take_damage(damage, knockback, hitstunValue):
 	
 	# check if dead
 	if health <= 0:
+		AnimPlayer.play("death")
 		queue_free()
 
 func getPlayer(p):
@@ -82,3 +85,7 @@ func _on_spawn_timer_timeout():
 			emit_signal("spawn_enemy", "basic")
 		else:
 			emit_signal("spawn_enemy", "sewer")
+
+
+func _on_animated_sprite_2d_animation_finished():
+	pass # Replace with function body.

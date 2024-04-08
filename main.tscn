@@ -33554,7 +33554,7 @@ texture = SubResource("Texture2DRD_utue0")
 modulate_color = Color(0.164706, 0.164706, 0.137255, 0.301961)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kc0xt"]
-size = Vector2(1441, 673)
+size = Vector2(2850, 970)
 
 [node name="main" type="Node"]
 script = ExtResource("1_4a271")
@@ -33686,13 +33686,13 @@ position = Vector2(1932, 119)
 scale = Vector2(3.5, 3.5)
 
 [node name="Boss" parent="." instance=ExtResource("21_ww1ug")]
-position = Vector2(8792, 3504)
+position = Vector2(8655, 1957)
 
 [node name="BossArea" type="Area2D" parent="."]
 position = Vector2(7931, 3371)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossArea"]
-position = Vector2(213.5, -77)
+position = Vector2(-368, -1770)
 shape = SubResource("RectangleShape2D_kc0xt")
 
 [node name="BossMusicLoop" type="AudioStreamPlayer2D" parent="BossArea/CollisionShape2D"]
