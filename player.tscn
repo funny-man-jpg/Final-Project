@@ -525,7 +525,7 @@ jump_time_to_descent = 0.5
 position = Vector2(1.90735e-06, 2.86102e-06)
 scale = Vector2(3.02083, 2.47917)
 sprite_frames = SubResource("SpriteFrames_ifkcn")
-animation = &"death"
+animation = &"run"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

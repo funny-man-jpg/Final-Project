@@ -91,7 +91,7 @@ func _on_boss_area_body_entered(body):
 	# check if the area is the player
 	if body == $Player:
 		$MainMusic.stop()
-		$BossMusicIntro.play()
+		$BossArea/BossMusicIntro.play()
 		$Boss.startup()
 
 
@@ -105,8 +105,8 @@ func _on_title_music_finished():
 
 
 func _on_boss_music_intro_finished():
-	$BossMusicLoop.play()
+	$BossArea/CollisionShape2D/BossMusicLoop.play()
 
 
 func _on_boss_music_loop_finished():
-	$BossMusicLoop.play()
+	$BossArea/CollisionShape2D/BossMusicLoop.play()

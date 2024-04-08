@@ -389,8 +389,9 @@ script = ExtResource("1_l7sqg")
 position = Vector2(3.65625, 8.78278)
 scale = Vector2(8.95898, 8.72794)
 sprite_frames = SubResource("SpriteFrames_pnyye")
-animation = &"stage3_death"
+animation = &"idle"
 autoplay = "idle"
+frame_progress = 0.914461
 
 [node name="Icon" type="Sprite2D" parent="."]
 visible = false
