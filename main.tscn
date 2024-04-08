@@ -19,8 +19,8 @@
 [ext_resource type="Texture2D" uid="uid://d3al1b5b0t8kb" path="res://assets/Cooldown1.png" id="14_gar14"]
 [ext_resource type="Texture2D" uid="uid://cmyd8jxio2twt" path="res://assets/Cooldown3.PNG" id="15_weum2"]
 [ext_resource type="PackedScene" uid="uid://d1jhbjabrg5xv" path="res://title_page.tscn" id="20_naqo3"]
-[ext_resource type="PackedScene" path="res://wall.tscn" id="21_s55ig"]
-[ext_resource type="PackedScene" path="res://boss.tscn" id="21_ww1ug"]
+[ext_resource type="PackedScene" uid="uid://bj636sc0te40g" path="res://wall.tscn" id="21_s55ig"]
+[ext_resource type="PackedScene" uid="uid://ddpaj7ywnx0es" path="res://boss.tscn" id="21_ww1ug"]
 [ext_resource type="AudioStream" uid="uid://0uq0k1i63c6b" path="res://Music/CyberpunkActionMusic.wav" id="22_7yn5l"]
 [ext_resource type="AudioStream" uid="uid://bvwjxwvgnlmu1" path="res://Music/CyberpunkEvilMusic Loop.wav" id="22_t5g8s"]
 [ext_resource type="AudioStream" uid="uid://cilnrpuig0bf8" path="res://Music/CyberpunkEvilMusic Intro.wav" id="23_iqq58"]
@@ -33696,11 +33696,11 @@ offset_right = 293.0
 offset_bottom = 923.0
 
 [node name="Wall" parent="." instance=ExtResource("21_s55ig")]
-position = Vector2(1986, 564)
+position = Vector2(1999, 564)
 scale = Vector2(3.30385, 2.08861)
 
 [node name="Wall2" parent="." instance=ExtResource("21_s55ig")]
-position = Vector2(1907, 119)
+position = Vector2(1932, 119)
 scale = Vector2(3.5, 3.5)
 
 [node name="Boss" parent="." instance=ExtResource("21_ww1ug")]
