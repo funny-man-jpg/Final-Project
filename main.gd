@@ -65,6 +65,8 @@ func start_game():
 	# make the title page dissapear and unfreeze the player
 	$TitlePage.visible = false
 	$Player.move = true
+	$TitleMusic.stop()
+	$MainMusic.play()
 
 func spawn_enemy(enemy_type):
 	# instantiate the enemy scene
@@ -88,5 +90,23 @@ func spawn_enemy(enemy_type):
 func _on_boss_area_body_entered(body):
 	# check if the area is the player
 	if body == $Player:
+		$MainMusic.stop()
+		$BossMusicIntro.play()
 		$Boss.startup()
 
+
+
+func _on_audio_stream_player_finished():
+	$MainMusic.play()
+
+
+func _on_title_music_finished():
+	$TitleMusic.play()
+
+
+func _on_boss_music_intro_finished():
+	$BossMusicLoop.play()
+
+
+func _on_boss_music_loop_finished():
+	$BossMusicLoop.play()

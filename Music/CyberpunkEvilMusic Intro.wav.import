@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cilnrpuig0bf8"
+path="res://.godot/imported/CyberpunkEvilMusic Intro.wav-b1359957e11fda201e548a4e07ca2e6f.sample"
+
+[deps]
+
+source_file="res://Music/CyberpunkEvilMusic Intro.wav"
+dest_files=["res://.godot/imported/CyberpunkEvilMusic Intro.wav-b1359957e11fda201e548a4e07ca2e6f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
