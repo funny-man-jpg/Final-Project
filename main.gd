@@ -6,6 +6,7 @@ signal reset_enemies
 
 @onready var Player = $Player
 @onready var player_health_bar = $Player/Healthbar
+@onready var health_value = $Player/HP
 
 var boss_enemies = []
 
@@ -38,6 +39,7 @@ func _process(delta):
 #A signal to connect to the player's healthbar
 func _on_player_health_change(new_health):
 	player_health_bar.value = new_health
+	health_value.text = str(new_health)
 	
 	# check if the player is dead
 	if new_health <= 0:

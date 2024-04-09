@@ -33640,6 +33640,7 @@ stream = ExtResource("22_t5g8s")
 volume_db = -8.0
 
 [node name="BossMusicIntro" type="AudioStreamPlayer2D" parent="BossArea"]
+position = Vector2(-368, -1770)
 stream = ExtResource("23_iqq58")
 volume_db = -8.0
 
@@ -33727,6 +33728,20 @@ offset_right = 1092.0
 offset_bottom = 601.0
 scale = Vector2(0.876253, 0.876253)
 texture = ExtResource("19_813iu")
+
+[node name="HP" type="Label" parent="Player"]
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = -99.0
+offset_right = 53.0
+offset_bottom = -76.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "200"
 
 [node name="TitlePage" parent="." instance=ExtResource("20_naqo3")]
 visible = false

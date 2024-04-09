@@ -184,6 +184,7 @@ func take_damage(damage, knockback, hitStun):
 	$hitStun.start(hitStun)
 	# lose health
 	health -= damage
+	print(health)
 	# get the health signal
 	emit_signal("health_change", health)
 	
