@@ -106,6 +106,9 @@ func _on_boss_music_loop_finished():
 
 func _on_boss_dead():
 	$Player/EndScreen.visible = true
+	$Player/EndScreen/Credits.visible = true
+	$Player.move = false
+	
 	for i in boss_enemies:
 		if i != null:
 			i.queue_free()

@@ -33655,7 +33655,6 @@ autoplay = true
 
 [node name="Player" parent="." instance=ExtResource("2_xoa5f")]
 position = Vector2(-363, 542)
-metadata/_edit_group_ = true
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
@@ -33720,15 +33719,6 @@ texture_under = ExtResource("3_3u314")
 texture_over = ExtResource("4_wlcha")
 texture_progress = ExtResource("5_llmcm")
 
-[node name="EndScreen" type="TextureRect" parent="Player"]
-visible = false
-offset_left = -828.0
-offset_top = -479.0
-offset_right = 1092.0
-offset_bottom = 601.0
-scale = Vector2(0.876253, 0.876253)
-texture = ExtResource("19_813iu")
-
 [node name="HP" type="Label" parent="Player"]
 anchors_preset = 13
 anchor_left = 0.5
@@ -33742,6 +33732,25 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 text = "200"
+
+[node name="EndScreen" type="TextureRect" parent="Player"]
+visible = false
+offset_left = -828.0
+offset_top = -479.0
+offset_right = 1092.0
+offset_bottom = 601.0
+scale = Vector2(0.876253, 0.876253)
+texture = ExtResource("19_813iu")
+
+[node name="Credits" type="Label" parent="Player/EndScreen"]
+visible = false
+layout_mode = 0
+offset_left = 305.848
+offset_top = 853.635
+offset_right = 1960.85
+offset_bottom = 947.635
+theme_override_font_sizes/font_size = 25
+text = "Music: MarkoShrko                  Player/Enemy Art: Wenjing               Part Tile Map/Player Animation: craftpix.net"
 
 [node name="TitlePage" parent="." instance=ExtResource("20_naqo3")]
 visible = false
