@@ -50,6 +50,8 @@ func _on_player_health_change(new_health):
 		
 		# reset the enemy list
 		boss_enemies = []
+		$BossArea/BossMusicLoop.stop()
+		$BossArea/BossMusicIntro.stop()
 		$MainMusic.play()
 
 func _on_basic_enemy_new_enemy(enemy):
