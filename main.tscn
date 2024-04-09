@@ -33635,14 +33635,11 @@ position = Vector2(7931, 3371)
 position = Vector2(-368, -1770)
 shape = SubResource("RectangleShape2D_kc0xt")
 
-[node name="BossMusicLoop" type="AudioStreamPlayer2D" parent="BossArea/CollisionShape2D"]
-stream = ExtResource("22_t5g8s")
-volume_db = -8.0
-
-[node name="BossMusicIntro" type="AudioStreamPlayer2D" parent="BossArea"]
-position = Vector2(-368, -1770)
+[node name="BossMusicIntro" type="AudioStreamPlayer" parent="BossArea"]
 stream = ExtResource("23_iqq58")
-volume_db = -8.0
+
+[node name="BossMusicLoop" type="AudioStreamPlayer" parent="BossArea"]
+stream = ExtResource("22_t5g8s")
 
 [node name="MainMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("22_7yn5l")
@@ -33779,8 +33776,8 @@ offset_bottom = 923.0
 [connection signal="new_enemy" from="BasicEnemy8" to="." method="_on_basic_enemy_new_enemy"]
 [connection signal="dead" from="Boss" to="." method="_on_boss_dead"]
 [connection signal="body_entered" from="BossArea" to="." method="_on_boss_area_body_entered"]
-[connection signal="finished" from="BossArea/CollisionShape2D/BossMusicLoop" to="." method="_on_boss_music_loop_finished"]
 [connection signal="finished" from="BossArea/BossMusicIntro" to="." method="_on_boss_music_intro_finished"]
+[connection signal="finished" from="BossArea/BossMusicLoop" to="." method="_on_boss_music_loop_finished"]
 [connection signal="finished" from="MainMusic" to="." method="_on_audio_stream_player_finished"]
 [connection signal="finished" from="TitleMusic" to="." method="_on_title_music_finished"]
 [connection signal="health_change" from="Player" to="." method="_on_player_health_change"]

@@ -50,6 +50,7 @@ func _on_player_health_change(new_health):
 		
 		# reset the enemy list
 		boss_enemies = []
+		$MainMusic.play()
 
 func _on_basic_enemy_new_enemy(enemy):
 	# give the new enemy a reference to the player
@@ -98,10 +99,10 @@ func _on_title_music_finished():
 	$TitleMusic.play()
 
 func _on_boss_music_intro_finished():
-	$BossArea/CollisionShape2D/BossMusicLoop.play()
+	$BossArea/BossMusicLoop.play()
 
 func _on_boss_music_loop_finished():
-	$BossArea/CollisionShape2D/BossMusicLoop.play()
+	$BossArea/BossMusicLoop.play()
 
 
 func _on_boss_dead():
