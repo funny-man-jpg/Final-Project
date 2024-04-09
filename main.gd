@@ -25,12 +25,6 @@ func _ready():
 	
 	# connect to the boss spawn signal
 	$Boss.spawn_enemy.connect(spawn_enemy)
-	
-	#var enemies = get_tree().get_nodes_in_group("enemies")
-	#for i in enemies:
-		#i.new_enemy.connect(_on_basic_enemy_new_enemy)
-		#i.enemy_health_change.connect(_on_player_health_change)
-	#print($BasicEnemy2.is_connected("new_enemy", _on_basic_enemy_new_enemy))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -49,7 +43,8 @@ func _on_player_health_change(new_health):
 	if new_health <= 0:
 		# delete all the enemies in the enemy list
 		for e in boss_enemies:
-			e.delete_self()
+			if e != null:
+				e.delete_self()
 		
 		# reset the enemy list
 		boss_enemies = []
@@ -76,7 +71,7 @@ func spawn_enemy(enemy_type):
 	enemy.enemyType = enemy_type
 	
 	# place the enemy
-	enemy.position = Vector2(8700, 3550)
+	enemy.position = Vector2(8500, 2000)
 	
 	# give the player to the enemy
 	enemy.getPlayer($Player)
@@ -94,19 +89,14 @@ func _on_boss_area_body_entered(body):
 		$BossArea/BossMusicIntro.play()
 		$Boss.startup()
 
-
-
 func _on_audio_stream_player_finished():
 	$MainMusic.play()
-
 
 func _on_title_music_finished():
 	$TitleMusic.play()
 
-
 func _on_boss_music_intro_finished():
 	$BossArea/CollisionShape2D/BossMusicLoop.play()
-
 
 func _on_boss_music_loop_finished():
 	$BossArea/CollisionShape2D/BossMusicLoop.play()
