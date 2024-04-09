@@ -7,6 +7,8 @@ var health
 var stage = 1
 var player
 var healthbar
+var stageComplete = 1
+signal dead
 
 @onready var AnimPlayer = $AnimatedSprite2D
 
@@ -20,7 +22,7 @@ func _ready():
 	healthbar.visible = false
 	
 	# set up timer value
-	$SpawnTimer.wait_time = 7
+	$SpawnTimer.wait_time = 14
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -34,8 +36,9 @@ func reset_self():
 	
 	# reset stage
 	stage = 1
-	$SpawnTimer.wait_time = 7
-	
+	$SpawnTimer.wait_time = 14
+	stageComplete = 1
+	AnimPlayer.play("idle")
 	# stop the spawn timer
 	$SpawnTimer.stop()
 
@@ -47,16 +50,22 @@ func take_damage(damage, knockback, hitstunValue):
 	
 	# check if next stage reached
 	if health <= 200:
+		if stageComplete == 2:
+			stageComplete += 1
+			AnimPlayer.play("stage2_change")
 		stage = 3
-		$SpawnTimer.wait_time = 3.5
+		$SpawnTimer.wait_time = 5
 	elif health <= 400:
+		if stageComplete == 1:
+			stageComplete += 1
+			AnimPlayer.play("stage1_change")
 		stage = 2
-		$SpawnTimer.wait_time = 5.0
+		$SpawnTimer.wait_time = 10
 	
 	# check if dead
 	if health <= 0:
-		AnimPlayer.play("death")
-		queue_free()
+		AnimPlayer.play("stage3_death")
+		stageComplete += 1
 
 func getPlayer(p):
 	player = p
@@ -67,7 +76,7 @@ func getPlayer(p):
 func startup():
 	# start the spawn timer
 	$SpawnTimer.start()
-	
+	AnimPlayer.play("idle")
 	# show the healthbar
 	healthbar.visible = true
 
@@ -86,6 +95,15 @@ func _on_spawn_timer_timeout():
 		else:
 			emit_signal("spawn_enemy", "sewer")
 
+	
+		
 
-func _on_animated_sprite_2d_animation_finished():
-	pass # Replace with function body.
+
+func _on_animated_sprite_2d_animation_looped():
+	if stageComplete == 2:
+		AnimPlayer.play("stage2")
+	elif stageComplete == 3:
+		AnimPlayer.play("stage3")
+	elif stageComplete >= 4:
+		emit_signal("dead")
+		queue_free()

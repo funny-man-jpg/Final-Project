@@ -100,3 +100,11 @@ func _on_boss_music_intro_finished():
 
 func _on_boss_music_loop_finished():
 	$BossArea/CollisionShape2D/BossMusicLoop.play()
+
+
+func _on_boss_dead():
+	$Player/EndScreen.visible = true
+	for i in boss_enemies:
+		if i != null:
+			i.queue_free()
+	

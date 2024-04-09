@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://5l1cpc7ivast"]
+[gd_scene load_steps=45 format=3 uid="uid://5l1cpc7ivast"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_4a271"]
 [ext_resource type="Texture2D" uid="uid://bd3upbk6p88j6" path="res://assets/2.png" id="2_cq6f5"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://sqg4m5wg68h6" path="res://assets/Cooldown2.PNG" id="13_gwn8u"]
 [ext_resource type="Texture2D" uid="uid://d3al1b5b0t8kb" path="res://assets/Cooldown1.png" id="14_gar14"]
 [ext_resource type="Texture2D" uid="uid://cmyd8jxio2twt" path="res://assets/Cooldown3.PNG" id="15_weum2"]
+[ext_resource type="Texture2D" uid="uid://byxhho8lfjvox" path="res://assets/endScreen.png" id="19_813iu"]
 [ext_resource type="PackedScene" uid="uid://d1jhbjabrg5xv" path="res://title_page.tscn" id="20_naqo3"]
 [ext_resource type="PackedScene" uid="uid://bj636sc0te40g" path="res://wall.tscn" id="21_s55ig"]
 [ext_resource type="PackedScene" uid="uid://ddpaj7ywnx0es" path="res://boss.tscn" id="21_ww1ug"]
@@ -33526,6 +33527,9 @@ sources/2 = SubResource("TileSetAtlasSource_f3upw")
 sources/9 = SubResource("TileSetAtlasSource_74qt2")
 sources/10 = SubResource("TileSetAtlasSource_c7qk2")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kc0xt"]
+size = Vector2(2850, 970)
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4jv6h"]
 texture = ExtResource("13_gwn8u")
 
@@ -33552,9 +33556,6 @@ texture = ExtResource("15_weum2")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c7gl2"]
 texture = SubResource("Texture2DRD_utue0")
 modulate_color = Color(0.164706, 0.164706, 0.137255, 0.301961)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kc0xt"]
-size = Vector2(2850, 970)
 
 [node name="main" type="Node"]
 script = ExtResource("1_4a271")
@@ -33602,6 +33603,41 @@ enemyType = "sewer"
 
 [node name="BasicEnemy4" parent="." instance=ExtResource("6_klgvo")]
 position = Vector2(1965, 1452)
+
+[node name="Wall" parent="." instance=ExtResource("21_s55ig")]
+position = Vector2(1999, 564)
+scale = Vector2(3.30385, 2.08861)
+
+[node name="Wall2" parent="." instance=ExtResource("21_s55ig")]
+position = Vector2(1932, 119)
+scale = Vector2(3.5, 3.5)
+
+[node name="Boss" parent="." instance=ExtResource("21_ww1ug")]
+position = Vector2(8655, 1957)
+
+[node name="BossArea" type="Area2D" parent="."]
+position = Vector2(7931, 3371)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossArea"]
+position = Vector2(-368, -1770)
+shape = SubResource("RectangleShape2D_kc0xt")
+
+[node name="BossMusicLoop" type="AudioStreamPlayer2D" parent="BossArea/CollisionShape2D"]
+stream = ExtResource("22_t5g8s")
+volume_db = -8.0
+
+[node name="BossMusicIntro" type="AudioStreamPlayer2D" parent="BossArea"]
+stream = ExtResource("23_iqq58")
+volume_db = -8.0
+
+[node name="MainMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("22_7yn5l")
+volume_db = -8.0
+
+[node name="TitleMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("23_xkf35")
+volume_db = -8.0
+autoplay = true
 
 [node name="Player" parent="." instance=ExtResource("2_xoa5f")]
 position = Vector2(-363, 542)
@@ -33670,47 +33706,21 @@ texture_under = ExtResource("3_3u314")
 texture_over = ExtResource("4_wlcha")
 texture_progress = ExtResource("5_llmcm")
 
+[node name="EndScreen" type="TextureRect" parent="Player"]
+visible = false
+offset_left = -828.0
+offset_top = -479.0
+offset_right = 1092.0
+offset_bottom = 601.0
+scale = Vector2(0.876253, 0.876253)
+texture = ExtResource("19_813iu")
+
 [node name="TitlePage" parent="." instance=ExtResource("20_naqo3")]
 visible = false
 offset_left = -1024.0
 offset_top = 184.0
 offset_right = 293.0
 offset_bottom = 923.0
-
-[node name="Wall" parent="." instance=ExtResource("21_s55ig")]
-position = Vector2(1999, 564)
-scale = Vector2(3.30385, 2.08861)
-
-[node name="Wall2" parent="." instance=ExtResource("21_s55ig")]
-position = Vector2(1932, 119)
-scale = Vector2(3.5, 3.5)
-
-[node name="Boss" parent="." instance=ExtResource("21_ww1ug")]
-position = Vector2(8655, 1957)
-
-[node name="BossArea" type="Area2D" parent="."]
-position = Vector2(7931, 3371)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BossArea"]
-position = Vector2(-368, -1770)
-shape = SubResource("RectangleShape2D_kc0xt")
-
-[node name="BossMusicLoop" type="AudioStreamPlayer2D" parent="BossArea/CollisionShape2D"]
-stream = ExtResource("22_t5g8s")
-volume_db = -8.0
-
-[node name="BossMusicIntro" type="AudioStreamPlayer2D" parent="BossArea"]
-stream = ExtResource("23_iqq58")
-volume_db = -8.0
-
-[node name="MainMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("22_7yn5l")
-volume_db = -8.0
-
-[node name="TitleMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("23_xkf35")
-volume_db = -8.0
-autoplay = true
 
 [connection signal="body_entered" from="ladder" to="ladder" method="_on_ladder_body_entered"]
 [connection signal="body_exited" from="ladder" to="ladder" method="_on_body_exited"]
@@ -33722,9 +33732,10 @@ autoplay = true
 [connection signal="new_enemy" from="BasicEnemy3" to="." method="_on_basic_enemy_new_enemy"]
 [connection signal="enemy_health_change" from="BasicEnemy4" to="." method="_on_basic_enemy_enemy_health_change"]
 [connection signal="new_enemy" from="BasicEnemy4" to="." method="_on_basic_enemy_new_enemy"]
-[connection signal="health_change" from="Player" to="." method="_on_player_health_change"]
+[connection signal="dead" from="Boss" to="." method="_on_boss_dead"]
 [connection signal="body_entered" from="BossArea" to="." method="_on_boss_area_body_entered"]
 [connection signal="finished" from="BossArea/CollisionShape2D/BossMusicLoop" to="." method="_on_boss_music_loop_finished"]
 [connection signal="finished" from="BossArea/BossMusicIntro" to="." method="_on_boss_music_intro_finished"]
 [connection signal="finished" from="MainMusic" to="." method="_on_audio_stream_player_finished"]
 [connection signal="finished" from="TitleMusic" to="." method="_on_title_music_finished"]
+[connection signal="health_change" from="Player" to="." method="_on_player_health_change"]
