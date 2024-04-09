@@ -27,6 +27,7 @@ var spawnY
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var animEnemy = $AnimatedSprite2D
+@onready var Hp = $Hp
 
 func _ready():
 	# store starting position
@@ -69,6 +70,8 @@ func take_damage(damage, knockback, hitstunValue):
 	health -= damage
 	healthbar.visible = true
 	healthbar.value = health
+	Hp.visible = true
+	Hp.text = str(health)
 	#emit_signal("enemy_health_change", health)
 	
 	# check if dead
@@ -213,6 +216,7 @@ func reset_self():
 	
 	# re-hide healthbar
 	healthbar.visible = false
+	Hp.visible = false
 
 func _on_animated_sprite_2d_animation_finished():
 	if animEnemy.animation == "attack":
