@@ -33604,6 +33604,19 @@ enemyType = "sewer"
 [node name="BasicEnemy4" parent="." instance=ExtResource("6_klgvo")]
 position = Vector2(1965, 1452)
 
+[node name="BasicEnemy5" parent="." instance=ExtResource("6_klgvo")]
+position = Vector2(4615, 573)
+
+[node name="BasicEnemy6" parent="." instance=ExtResource("6_klgvo")]
+position = Vector2(5175, 572)
+enemyType = "sewer"
+
+[node name="BasicEnemy7" parent="." instance=ExtResource("6_klgvo")]
+position = Vector2(882, -972)
+
+[node name="BasicEnemy8" parent="." instance=ExtResource("6_klgvo")]
+position = Vector2(2742, -281)
+
 [node name="Wall" parent="." instance=ExtResource("21_s55ig")]
 position = Vector2(1999, 564)
 scale = Vector2(3.30385, 2.08861)
@@ -33732,6 +33745,14 @@ offset_bottom = 923.0
 [connection signal="new_enemy" from="BasicEnemy3" to="." method="_on_basic_enemy_new_enemy"]
 [connection signal="enemy_health_change" from="BasicEnemy4" to="." method="_on_basic_enemy_enemy_health_change"]
 [connection signal="new_enemy" from="BasicEnemy4" to="." method="_on_basic_enemy_new_enemy"]
+[connection signal="enemy_health_change" from="BasicEnemy5" to="." method="_on_basic_enemy_enemy_health_change"]
+[connection signal="new_enemy" from="BasicEnemy5" to="." method="_on_basic_enemy_new_enemy"]
+[connection signal="enemy_health_change" from="BasicEnemy6" to="." method="_on_basic_enemy_enemy_health_change"]
+[connection signal="new_enemy" from="BasicEnemy6" to="." method="_on_basic_enemy_new_enemy"]
+[connection signal="enemy_health_change" from="BasicEnemy7" to="." method="_on_basic_enemy_enemy_health_change"]
+[connection signal="new_enemy" from="BasicEnemy7" to="." method="_on_basic_enemy_new_enemy"]
+[connection signal="enemy_health_change" from="BasicEnemy8" to="." method="_on_basic_enemy_enemy_health_change"]
+[connection signal="new_enemy" from="BasicEnemy8" to="." method="_on_basic_enemy_new_enemy"]
 [connection signal="dead" from="Boss" to="." method="_on_boss_dead"]
 [connection signal="body_entered" from="BossArea" to="." method="_on_boss_area_body_entered"]
 [connection signal="finished" from="BossArea/CollisionShape2D/BossMusicLoop" to="." method="_on_boss_music_loop_finished"]
